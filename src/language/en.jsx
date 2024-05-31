@@ -86,13 +86,13 @@ export const en = {
     button: "Log in",
     pageTitle: "Sign Up Success",
     content:
-      "Congratulations on your successful registration. Let's explore CareConnect!",
+      "Congratulations on your successful registration. Let's explore SMMMS!",
   },
   Otp: {
     button: "Log in",
     pageTitle: "Sign Up Success",
     content:
-      "Congratulations on your successful registration. Let's explore CareConnect!",
+      "Congratulations on your successful registration. Let's explore SMMMS!",
   },
   Home: {
     catalogue: "Danh mục",

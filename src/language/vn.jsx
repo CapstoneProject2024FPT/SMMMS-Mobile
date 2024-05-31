@@ -121,7 +121,7 @@ export const vn = {
   RegisterSuccess: {
     button: "Đăng Nhập",
     pageTitle: "Đăng ký thành công",
-    content: "Chúc mừng bạn đăng ký thành công Cùng khám phá CareConnect nào!",
+    content: "Chúc mừng bạn đăng ký thành công Cùng khám phá SMMMS nào!",
   },
   Otp: {
     button: "Xác nhận",

@@ -1,10 +1,5 @@
 import React, { useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  Button,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, View, Button, Keyboard } from "react-native";
 import * as yup from "yup";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -54,6 +49,7 @@ export default function LoginScreen() {
 
   const handleLogin = (data) => {
     // Xử lý đăng nhập với dữ liệu từ data
+    console.log(data);
     setData(data);
     Keyboard.dismiss();
     console.log(data);

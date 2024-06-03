@@ -61,11 +61,6 @@ export default function HealthMonitorDetail() {
         style={styles?.scrollView}
       >
         <ComHealthIndex></ComHealthIndex>
-        <ComHealthIndex></ComHealthIndex>
-        <ComHealthIndex></ComHealthIndex>
-        <ComHealthIndex></ComHealthIndex>
-        <ComHealthIndex></ComHealthIndex>
-        <ComHealthIndex></ComHealthIndex>
         <ComTextArea
           label={"Ghi chú"}
           placeholder={"Ghi chú"}

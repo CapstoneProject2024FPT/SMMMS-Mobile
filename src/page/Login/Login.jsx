@@ -49,7 +49,6 @@ export default function LoginScreen() {
 
   const handleLogin = (data) => {
     // Xử lý đăng nhập với dữ liệu từ data
-    console.log(data);
     setData(data);
     Keyboard.dismiss();
     console.log(data);
@@ -76,40 +75,6 @@ export default function LoginScreen() {
         }
       });
   };
-  const data = [
-    {
-      value: "",
-      label: "toàn",
-    },
-    {
-      value: "2",
-      label: "toàn1",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -161,16 +126,6 @@ export default function LoginScreen() {
             </ComButton>
           </View>
         </FormProvider>
-        <Button
-          title="vn"
-          style={{ margin: 100 }}
-          onPress={() => setLanguage("vn")}
-        />
-        <Button
-          title="en"
-          style={{ margin: 100 }}
-          onPress={() => setLanguage("en")}
-        />
       </View>
     </View>
   );

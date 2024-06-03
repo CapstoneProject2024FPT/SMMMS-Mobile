@@ -23,12 +23,12 @@ export default function ComNew({ id, url, children, context }) {
         }}
       />
       <View style={styles.container}>
-       <View>
-         <Text style={styles.context}>{context}</Text>
-         <Text numberOfLines={5} style={styles.children}>
-           {children}
-         </Text>
-       </View>
+        <View>
+          <Text style={styles.context}>{context}</Text>
+          <Text numberOfLines={5} style={styles.children}>
+            {children}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );

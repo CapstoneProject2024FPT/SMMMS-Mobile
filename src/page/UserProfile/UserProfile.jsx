@@ -3,7 +3,6 @@ import { StyleSheet, View } from "react-native";
 import HeaderUser from "./HeaderUser";
 import MenuList from "./MenuList";
 import bill from "../../../assets/profile_icons/bill.png";
-import changeLanguage from "../../../assets/profile_icons/changeLanguage.png";
 import changePassword from "../../../assets/profile_icons/changePassword.png";
 import contract from "../../../assets/profile_icons/contract.png";
 import edit from "../../../assets/profile_icons/edit.png";
@@ -34,11 +33,6 @@ export default function UserProfile() {
       name: "Đổi mật khẩu",
       link: "ChangePassword",
       icon: changePassword,
-    },
-    {
-      name: "Đổi ngôn ngữ",
-      link: "",
-      icon: changeLanguage,
     },
     {
       name: "Thông báo",

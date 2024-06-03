@@ -4,15 +4,13 @@ import * as yup from "yup";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ComInput from "../../Components/ComInput/ComInput";
-import ComSelect from "../../Components/ComInput/ComSelect";
 import { useStorage } from "../../hooks/useLocalStorage";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import ComTitlePage from "../../Components/ComTitlePage/ComTitlePage";
-import { Form } from "react-native-autofocus";
 import ComButton from "../../Components/ComButton/ComButton";
 import ComTitle from "../../Components/ComTitle/ComTitle";
 import ComTitleLink from "../../Components/ComTitleLink/ComTitleLink";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 export default function Register() {
   const [datas, setData] = useStorage("toan", {});
@@ -58,19 +56,7 @@ export default function Register() {
     Keyboard.dismiss();
     console.log(data);
     navigation.navigate("Otp");
-
   };
-  const data = [
-    {
-      value: "",
-      label: "toàn",
-    },
-    {
-      value: "2",
-      label: "toàn1",
-    },
-  
-  ];
 
   return (
     <View style={styles.container}>
@@ -125,16 +111,6 @@ export default function Register() {
             </View>
           </View>
         </FormProvider>
-        <Button
-          title="vn"
-          style={{ margin: 100 }}
-          onPress={() => setLanguage("vn")}
-        />
-        <Button
-          title="en"
-          style={{ margin: 100 }}
-          onPress={() => setLanguage("en")}
-        />
       </View>
     </View>
   );

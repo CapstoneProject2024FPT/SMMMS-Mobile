@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import bill from "../../../assets/profile_icons/bill.png";
 
 const MenuItem = ({ iconName, text, link, colorRed }) => {
   const navigation = useNavigation();

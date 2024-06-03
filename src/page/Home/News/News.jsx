@@ -32,12 +32,11 @@ export default function News() {
       >
         <View style={styles?.buttonContainer}>
           <ComSelectButton onPress={check} check={select}>
-            Vui chơi
+            Bảo trì
           </ComSelectButton>
           <ComSelectButton onPress={check1} check={select1}>
-            Sức khỏe
+            Bảo hành
           </ComSelectButton>
-      
         </View>
       </ScrollView>
 
@@ -46,9 +45,9 @@ export default function News() {
           id={1}
           key={index}
           url={
-            "https://binhminhdigital.com/StoreData/images/PageData/mot-so-van-de-ban-can-luu-y-khi-chup-anh-cho-nguoi-gia-BinhMinhDigital4(1).jpg"
+            "https://cokhiintech.com/uploads/noidung/images/pif1505373774.png"
           }
-          context="Thực đơn dinh dưỡng"
+          context="Máy tiện cnc"
         >
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever

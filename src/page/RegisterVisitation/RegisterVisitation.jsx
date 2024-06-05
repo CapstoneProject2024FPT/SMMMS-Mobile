@@ -17,53 +17,7 @@ import ComSelectedOneDate from "./../../Components/ComDate/ComSelectedOneDate";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 
 export default function RegisterVisitation() {
-  const [elderData, setElderData] = useState([
-    {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Nguyễn Văn toàn",
-      age: "34",
-      sex: "Nam",
-      room: "17",
-      bed: "3",
-      id: 1,
-    },
-    {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Nguyễn Văn toàn",
-      age: "34",
-      sex: "Nam",
-      room: "17",
-      bed: "3",
-      id: 2,
-    },
-    {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Nguyễn Văn toàn",
-      age: "34",
-      sex: "Nam",
-      room: "17",
-      bed: "3",
-      id: 3,
-    },
-    {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Nguyễn Văn toàn",
-      age: "34",
-      sex: "Nam",
-      room: "17",
-      bed: "3",
-      id: 4,
-    },
-    {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Nguyễn Văn toàn",
-      age: "34",
-      sex: "Nam",
-      room: "17",
-      bed: "3",
-      id: 5,
-    },
-  ]);
+  const [elderData, setElderData] = useState([]);
   const [selectedDate, setSelectedDate] = useState({});
 
   const [selectedElderId, setSelectedElderId] = useState(null);
@@ -110,7 +64,7 @@ export default function RegisterVisitation() {
             </View>
           </View>
           <Text style={{ fontWeight: "bold", fontSize: 24, marginBottom: 10 }}>
-            {visitationText?.registerElder}
+            Báo cáo
           </Text>
 
           <View>

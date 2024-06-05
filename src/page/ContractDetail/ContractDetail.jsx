@@ -40,7 +40,7 @@ export default ContractDetail = () => {
     console.log("====================================");
     console.log(data);
     console.log("====================================");
-    handleClosePopup()
+    handleClosePopup();
     navigation.navigate("ContractCandSuccess");
   };
   return (
@@ -117,7 +117,7 @@ export default ContractDetail = () => {
           </View>
           <View style={styles.bodySeparator2}>
             <Text style={styles.text}>Trạng thái</Text>
-            <Text style={styles.text2}>Nguyễn văn toàn</Text>
+            <Text style={styles.text2}>Nguyễn Tiến Tài</Text>
           </View>
         </View>
       </View>

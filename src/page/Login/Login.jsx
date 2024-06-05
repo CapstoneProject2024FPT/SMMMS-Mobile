@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, Button, Keyboard } from "react-native";
 import * as yup from "yup";
 import { useForm, FormProvider } from "react-hook-form";
@@ -16,6 +16,7 @@ import { postData } from "../../api/api";
 export default function LoginScreen() {
   const [datas, setData] = useStorage("toan", {});
   const [accessToken, setToken] = useStorage("Token", {});
+  const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
 
   const {
@@ -35,8 +36,8 @@ export default function LoginScreen() {
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      username: "user",
-      password: "user",
+      username: "string",
+      password: "string",
     },
   });
 
@@ -55,7 +56,7 @@ export default function LoginScreen() {
     // navigation.navigate("Homes", { screen: "Home" });
     postData("/auth/login", data, {})
       .then((data) => {
-        setToken(data?.accessToken);
+        setToken(data?.tokenModel?.accessToken);
         // Chờ setToken hoàn thành trước khi navigate
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -65,13 +66,11 @@ export default function LoginScreen() {
         });
       })
       .catch((error) => {
-        console.error("Error fetching items:", error);
-        setDisabled(false);
         if (error?.response?.status === 401) {
           setErrorMessage(Login.message.invalidCredential);
         } else {
-          setLoginError(true);
-          setErrorMessage(Login.message.loginError);
+          // setLoginError(true);
+          // setErrorMessage(Login.message.loginError);
         }
       });
   };
@@ -121,6 +120,7 @@ export default function LoginScreen() {
                 {Login?.link?.register}
               </ComTitleLink>
             </View>
+            <ComTitle style={{ color: "red" }}>{errorMessage}</ComTitle>
             <ComButton onPress={handleSubmit(handleLogin)}>
               {Login?.button?.login}
             </ComButton>

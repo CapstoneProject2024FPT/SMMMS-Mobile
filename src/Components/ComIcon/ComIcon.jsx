@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Image, View } from "react-native";
-import Nav1 from "../../../assets/icon/Nav1_1.png";
-import Nav2 from "../../../assets/icon/Nav2_1.png";
-import Nav3 from "../../../assets/icon/Nav3_1.png";
-import Nav4 from "../../../assets/icon/Nav4_1.png";
-import Nav5 from "../../../assets/icon/Nav5_1.png";
+import Nav1 from "../../../assets/icon/NavIcon/Home_fill.png";
+import Nav2 from "../../../assets/icon/NavIcon/Calendar_fill.png";
+import Nav3 from "../../../assets/icon/NavIcon/Bell_fill.png";
+import Nav4 from "../../../assets/icon/NavIcon/Bell_fill.png";
+import Nav5 from "../../../assets/icon/NavIcon/User_fill.png";
 
-import Nav1_1 from "../../../assets/icon/Nav1_2.png";
-import Nav2_1 from "../../../assets/icon/Nav2_2.png";
-import Nav3_1 from "../../../assets/icon/Nav3_2.png";
-import Nav4_1 from "../../../assets/icon/Nav4_2.png";
-import Nav5_1 from "../../../assets/icon/Nav5_2.png";
+import Nav1_1 from "../../../assets/icon/NavIcon/Home_fill (1).png";
+import Nav2_1 from "../../../assets/icon/NavIcon/Calendar_fill (1).png";
+import Nav3_1 from "../../../assets/icon/NavIcon/Bell_fill (1).png";
+import Nav4_1 from "../../../assets/icon/NavIcon/Bell_fill (1).png";
+import Nav5_1 from "../../../assets/icon/NavIcon/User_fill (1).png";
+
 import { useEffect } from "react";
 
 export default function ComIcon({ icon }) {
@@ -62,7 +63,7 @@ export default function ComIcon({ icon }) {
     <View>
       <Image
         source={navBar}
-        style={{ width: 80, height: 60, objectFit: "fill" }}
+        style={{ width: 50, height: 50, objectFit: "fill" }}
       />
     </View>
   );

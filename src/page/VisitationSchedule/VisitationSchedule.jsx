@@ -84,7 +84,7 @@ export default function VisitationSchedule() {
   const searchSchema = yup.object().shape({
     search: yup.string(),
   });
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const {
     text: {
       visitationText,
@@ -107,7 +107,6 @@ export default function VisitationSchedule() {
 
   const register = () => {
     navigation.navigate("RegisterVisitation");
-
   };
   return (
     <View style={styles.body}>
@@ -115,15 +114,6 @@ export default function VisitationSchedule() {
         <View style={styles.imageBody}>
           <Image source={Visitation} style={styles.image} />
         </View>
-        <Text
-          style={{
-            color: "#716767",
-            textAlign: "center",
-            paddingHorizontal: 20,
-          }}
-        >
-          {visitationText?.visitationContent}
-        </Text>
       </View>
       <View
         style={{
@@ -150,7 +140,7 @@ export default function VisitationSchedule() {
                 fontSize: 20,
               }}
             >
-              {visitationText?.register}
+              Báo cáo
             </Text>
           </View>
         </TouchableOpacity>
@@ -205,9 +195,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: "180%",
-    height: "180%",
+    width: "100%",
+    height: "100%",
     resizeMode: "cover",
-    bottom: -50,
   },
 });

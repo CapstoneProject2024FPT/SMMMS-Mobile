@@ -8,25 +8,26 @@ export default function Notification({}) {
   const [select, setSelect] = useState(false);
   const [select1, setSelect1] = useState(true);
   const [select2, setSelect2] = useState(true);
+  const [select3, setSelect3] = useState(true);
   const data = [
     {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Phát hiện cụ ABC có chỉ số sức khỏe bất thường ",
+      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
+      name: "Bảo dưỡng máy tiện cnc ",
       day: "10:00 - 14/05/2024 ",
     },
     {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Phát hiện cụ ABC có chỉ số sức khỏe bất thường ",
+      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
+      name: "Bảo dưỡng máy tiện cnc ",
       day: "10:00 - 14/05/2024 ",
     },
     {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Phát hiện cụ ABC có chỉ số sức khỏe bất thường ",
+      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
+      name: "Bảo dưỡng máy tiện cnc ",
       day: "10:00 - 14/05/2024 ",
     },
     {
-      img: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
-      name: "Phát hiện cụ ABC có chỉ số sức khỏe bất thường ",
+      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
+      name: "Bảo dưỡng máy tiện cnc ",
       day: "10:00 - 14/05/2024 ",
     },
   ];
@@ -34,16 +35,25 @@ export default function Notification({}) {
     setSelect(false);
     setSelect1(true);
     setSelect2(true);
+    setSelect3(true);
   };
   const check1 = () => {
     setSelect(true);
     setSelect1(false);
+    setSelect3(true);
     setSelect2(true);
   };
   const check2 = () => {
     setSelect(true);
     setSelect1(true);
+    setSelect3(true);
     setSelect2(false);
+  };
+  const check3 = () => {
+    setSelect(true);
+    setSelect1(true);
+    setSelect3(false);
+    setSelect2(true);
   };
   return (
     <View style={styles.body}>
@@ -58,13 +68,13 @@ export default function Notification({}) {
             Tất cả
           </ComSelectButton>
           <ComSelectButton onPress={check1} check={select1}>
-            Khẩn cấp
+            Máy khoan
           </ComSelectButton>
           <ComSelectButton onPress={check2} check={select2}>
-            Thanh toán
+            Máy tiện
           </ComSelectButton>
-          <ComSelectButton onPress={check2} check={select2}>
-            Thanh toán
+          <ComSelectButton onPress={check3} check={select3}>
+            Máy xung điện
           </ComSelectButton>
           <View style={{ width: 20 }}></View>
         </View>
@@ -90,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 40,
     backgroundColor: "#fff",
-    paddingHorizontal:15
+    paddingHorizontal: 15,
   },
   buttonContainer: {
     flexDirection: "row",

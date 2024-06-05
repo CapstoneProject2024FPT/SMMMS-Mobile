@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const api = axios.create({
-  baseURL: "http://142.93.222.144:5000/api/",
+  baseURL: "https://sam.vinhuser.one/api/v1",
 });
 
 api.interceptors.request.use(
@@ -32,7 +32,6 @@ export const getData = async (endpoint, params = {}, headers = {}) => {
 
 export const postData = async (endpoint, data, headers = {}) => {
   try {
-
     const response = await api.post(endpoint, data, { headers });
     return response.data;
   } catch (error) {

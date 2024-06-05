@@ -17,11 +17,11 @@ export default function Contracts() {
   } = useContext(LanguageContext);
   const [data, setData] = useState([
     {
-      img: "https://png.pngtree.com/thumb_back/fw800/background/20230123/pngtree-old-people-physical-therapy-center-released-ball-photo-image_49464146.jpg",
+      img: "https://upviet.com.vn/uploaded/May%20cong%20nghiep/may%20cong%20cu/tien-co.jpg",
       color: "#F7E863",
-      text: "Vật lý trị liệu",
+      text: "Máy tiện cnc",
       context:
-        "giúp người cao tuổi duy trì và cải thiện khả năng vận động, giảm đau, tăng cường sức mạnh cơ bắp và sự linh hoạt. Các bài tập được thiết kế phù hợp với tình trạng sức khỏe và nhu cầu của từng cá nhân, nhằm nâng cao chất lượng cuộc sống và khả năng tự lập của họ.",
+        "Máy tiện cnc là một trong những thiết bị không thể thiếu trong ngành công nghiệp cơ khí chế tạo máy. Máy tiện cnc giúp gia công các chi tiết cơ khí chính xác, nhanh chóng và tiết kiệm chi phí.",
       category: "1111111111111",
     },
   ]);

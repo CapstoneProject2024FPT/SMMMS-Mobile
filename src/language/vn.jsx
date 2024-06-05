@@ -304,7 +304,7 @@ export const vn = {
   },
   contractsPage: {
     title: "Hợp đồng",
-    titleContract: "Hợp đồng dưỡng lão",
+    titleContract: "Hợp đồng máy cnc",
     id: "Mã",
     representative: "Người đại diện",
     duration: "Thời hạn ",

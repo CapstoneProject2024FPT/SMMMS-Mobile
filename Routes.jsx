@@ -33,7 +33,7 @@ import ResetPasswordSuccess from "./src/page/ForgetPassword/ResetPasswordSuccess
 import ChangePassword from "./src/page/ChangePassword/ChangePassword";
 import ChangePasswordSuccess from "./src/page/ChangePassword/ChangePasswordSuccess";
 import RegisterVisitation from "./src/page/RegisterVisitation/RegisterVisitation";
-import RegisterVisitationSuccess from './src/page/RegisterVisitation/RegisterVisitationSuccess';
+import RegisterVisitationSuccess from "./src/page/RegisterVisitation/RegisterVisitationSuccess";
 import Contracts from "./src/page/Contract/Contracts";
 import ContractDetail from "./src/page/ContractDetail/ContractDetail";
 import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
@@ -268,11 +268,11 @@ function MyBottomNavigationBar() {
         component={VisitationSchedule}
         // component={ServicePackages}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="HealthCondition"
         options={{ headerShown: false }}
         component={HealthMonitor}
-      />
+      /> */}
       <Tab.Screen
         name="Notification"
         options={{ headerShown: false }}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -12,38 +12,35 @@ import { LanguageContext } from "../../contexts/LanguageContext";
 import { useRoute } from "@react-navigation/native";
 import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
+import { getData } from "../../api/api";
 
-export default function AddingServiceDetail() {
-  const [data, setData] = useState({
-    img: "https://upviet.com.vn/uploaded/May%20cong%20nghiep/may%20cong%20cu/tien-co.jpg",
-    color: "#8DF7AB",
-    text: "Máy tiện cnc",
-    context:
-      "Máy tiện cnc là một trong những thiết bị không thể thiếu trong ngành công nghiệp cơ khí chế tạo máy. Máy tiện cnc giúp gia công các chi tiết cơ khí chính xác, nhanh chóng và tiết kiệm chi phí.",
-    category: "Máy tiện",
-    money: 350000,
-  });
+export default function AddingServiceDetail({ route }) {
+  const [data, setData] = useState({});
+  const [warrantyDetail, setWarrantyDetail] = useState([]);
 
   const {
     text: { addingPackages },
-    setLanguage,
   } = useContext(LanguageContext);
 
-  const route = useRoute();
+  const navigation = useNavigation();
   const { id } = route.params;
 
-  const navigation = useNavigation();
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getData(`warranty/${id}`);
+      setData(res.data);
+      setWarrantyDetail(res.data.warrantyDetail);
+    };
+    fetchData();
+  }, [id]);
+
+  const formatDateTime = (date) => {
+    const d = new Date(date);
+    return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  };
 
   const handleBackPress = () => {
     navigation.goBack();
-  };
-
-  const formatCurrency = (number) => {
-    // Sử dụng hàm toLocaleString() để định dạng số
-    return number.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
   };
 
   return (
@@ -55,13 +52,6 @@ export default function AddingServiceDetail() {
         >
           <Image source={backArrowWhite} style={styles.backIcon} />
         </TouchableOpacity>
-        <Image
-          source={{ uri: data?.img }}
-          style={{
-            height: 200,
-            objectFit: "fill",
-          }}
-        />
       </View>
 
       <View style={styles.body}>
@@ -70,28 +60,47 @@ export default function AddingServiceDetail() {
             style={{ fontWeight: "bold", fontSize: 20, marginBottom: 10 }}
             numberOfLines={2}
           >
-            {data?.text}
-          </Text>
-          {/* price */}
-          <Text style={{ fontSize: 16, marginBottom: 10 }}>
-            <Text style={{ fontWeight: "bold" }}>
-              {formatCurrency(data?.money)}
-            </Text>
-            /{addingPackages?.package?.month}
+            {data?.type}
           </Text>
           {/* category */}
           <Text style={{ flexDirection: "row", marginBottom: 10 }}>
             <Text style={styles.contentBold}>
               {addingPackages?.package?.category}
             </Text>
-            <Text style={{ fontSize: 16 }}>: {data?.category}</Text>
+            <Text style={{ fontSize: 16 }}>: {data?.type}</Text>
           </Text>
           {/* mô tả */}
           <Text style={styles.contentBold}>
             {addingPackages?.package?.description}
           </Text>
 
-          <Text style={{ fontSize: 16 }}>{data?.context}</Text>
+          <Text style={{ fontSize: 16 }}>{data?.description}</Text>
+
+          {/* Warranty Details */}
+          <Text style={styles.contentBold}>Warranty Details:</Text>
+          {warrantyDetail.map((item, index) => (
+            <View key={index} style={styles.warrantyDetail}>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>ID</Text>: {item.id}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Status</Text>:{" "}
+                {item.status}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Create Date</Text>:{" "}
+                {formatDateTime(item.createDate)}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Start Date</Text>:{" "}
+                {formatDateTime(item.startDate)}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Description</Text>:{" "}
+                {item.description}
+              </Text>
+            </View>
+          ))}
         </ScrollView>
         <View style={{ marginVertical: 20 }}>
           <ComSelectButton
@@ -134,5 +143,15 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 50,
     height: 50,
+  },
+  warrantyDetail: {
+    marginBottom: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 5,
+  },
+  detailText: {
+    fontSize: 16,
   },
 });

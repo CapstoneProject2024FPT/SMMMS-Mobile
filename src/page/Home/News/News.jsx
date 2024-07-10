@@ -24,7 +24,7 @@ export default function News() {
   };
   return (
     <View style={styles?.body}>
-      <TopicContent>{Home?.news}</TopicContent>
+      <TopicContent>{"Các hoạt động hôm nay"}</TopicContent>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}

@@ -21,18 +21,20 @@ export default function Catalogue() {
       <View style={styles.comCatalogue}>
         <TouchableOpacity onPress={() => goto("AddingService")}>
           <ComCatalogue
-            url={"https://megatechco.vn/wp-content/uploads/bao-tri.jpg"}
-          >
-            Bảo trì
-          </ComCatalogue>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <ComCatalogue
             url={
               "https://vn-test-11.slatic.net/p/00ecfe3cf218d389c26a65066e16ad37.png"
             }
           >
             Bảo hành
+          </ComCatalogue>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <ComCatalogue
+            url={
+              "https://i.pinimg.com/originals/2e/f2/f3/2ef2f3289430a49cfbd483bf44dd2f17.jpg"
+            }
+          >
+            Giao hàng
           </ComCatalogue>
         </TouchableOpacity>
       </View>

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Image, View } from "react-native";
+import { View } from "react-native";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,13 +12,6 @@ export default function ComAddPackage({ data }) {
 
   const navigation = useNavigation();
 
-  const formatCurrency = (number) => {
-    // Sử dụng hàm toLocaleString() để định dạng số
-    return number.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-  };
   return (
     <TouchableOpacity
       style={styles.body}
@@ -26,7 +19,7 @@ export default function ComAddPackage({ data }) {
         navigation.navigate("AddingServiceDetail", { id: data.id });
       }}
     >
-      <Image
+      {/* <Image
         source={{ uri: data?.img }}
         style={{
           width: 100,
@@ -34,27 +27,26 @@ export default function ComAddPackage({ data }) {
           borderRadius: 10,
           objectFit: "fill",
         }}
-      />
+      /> */}
       <View style={styles?.container}>
-        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{data?.text}</Text>
-        <Text numberOfLines={2}>{data?.context}</Text>
+        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{data?.type}</Text>
+        <Text style={{ flexDirection: "row" }}>
+          <Text style={{ fontWeight: "bold", fontSize: 14 }}>Trạng thái</Text>
+          <Text>: {data?.status}</Text>
+        </Text>
 
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>
             {addingPackages?.package?.category}
           </Text>
-          <Text>
-            : {data?.category}
-          </Text>
+          <Text>: {data?.type}</Text>
         </Text>
-      <Text>
-        <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-          {formatCurrency(data?.money)}
+        <Text>
+          <Text style={{ fontWeight: "bold", fontSize: 14 }}>Mô tả</Text>
+          <Text>: {data?.description}</Text>
         </Text>
-        /{addingPackages?.package?.month}
-      </Text>
-    </View>
-    </TouchableOpacity >
+      </View>
+    </TouchableOpacity>
   );
 }
 

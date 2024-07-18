@@ -37,6 +37,9 @@ import RegisterVisitationSuccess from "./src/page/RegisterVisitation/RegisterVis
 import Contracts from "./src/page/Contract/Contracts";
 import ContractDetail from "./src/page/ContractDetail/ContractDetail";
 import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
+import DeliveryService from "./src/page/DeliveryService/DeliveryService";
+import DeliveryDetail from "./src/page/DeliveryDetail/DeliveryDetail";
+import DeliveryConfirm from "./src/page/DeliveryDetail/DeliveryConfirm";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,6 +81,21 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           name="AddingService"
           component={AddingServicePackages}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="DeliveryService"
+          component={DeliveryService}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="DeliveryDetail"
+          component={DeliveryDetail}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="DeliveryConfirm"
+          component={DeliveryConfirm}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}

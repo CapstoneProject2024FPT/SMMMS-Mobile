@@ -28,7 +28,7 @@ export default function Catalogue() {
             Bảo hành
           </ComCatalogue>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>goto("DeliveryService")}>
           <ComCatalogue
             url={
               "https://i.pinimg.com/originals/2e/f2/f3/2ef2f3289430a49cfbd483bf44dd2f17.jpg"

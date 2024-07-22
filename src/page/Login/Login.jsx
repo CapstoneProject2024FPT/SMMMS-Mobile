@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { postData } from "../../api/api";
 
 export default function LoginScreen() {
-  const [datas, setData] = useStorage("toan", {});
+  const [datas, setData] = useStorage("user", {});
   const [accessToken, setToken] = useStorage("Token", {});
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
@@ -36,8 +36,8 @@ export default function LoginScreen() {
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      username: "string",
-      password: "string",
+      username: "tai1234",
+      password: "12345678",
     },
   });
 
@@ -50,13 +50,14 @@ export default function LoginScreen() {
 
   const handleLogin = (data) => {
     // Xử lý đăng nhập với dữ liệu từ data
-    setData(data);
     Keyboard.dismiss();
     console.log(data);
     // navigation.navigate("Homes", { screen: "Home" });
     postData("/auth/login", data, {})
       .then((data) => {
         setToken(data?.tokenModel?.accessToken);
+        setData(data);
+
         // Chờ setToken hoàn thành trước khi navigate
         return new Promise((resolve) => {
           setTimeout(() => {

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as yup from "yup";
@@ -10,9 +10,14 @@ import ComButton from "../../Components/ComButton/ComButton";
 import ComSelect from "../../Components/ComInput/ComSelect";
 import ComDatePicker from "../../Components/ComInput/ComDatePicker";
 import { ScrollView } from "react-native";
+import { useStorage } from "../../hooks/useLocalStorage";
+import { getData } from "../../api/api";
 
 export default function DetailProfile() {
   const [date, setDate] = useState(new Date());
+  const [userData, setUserData] = useState({});
+  const [user, setData] = useStorage("user", {});
+
   const navigation = useNavigation();
   const {
     text: {
@@ -23,11 +28,7 @@ export default function DetailProfile() {
   } = useContext(LanguageContext);
   const loginSchema = yup.object().shape({
     fullName: yup.string().trim().required(EditProfile?.message?.fullName),
-    gender: yup.string().trim().required(EditProfile?.message?.gender),
-    dateOfBirth: yup
-      .string()
-      .trim()
-      .required(EditProfile?.message?.dateOfBirth),
+    username: yup.string().trim().required(EditProfile?.message?.username),
     phoneNumber: yup
       .string()
       .trim()
@@ -37,23 +38,20 @@ export default function DetailProfile() {
       .email(EditProfile?.message?.emailInvalid)
       .trim()
       .required(EditProfile?.message?.email),
-    idNumber: yup.string().trim().required(EditProfile?.message?.idNumber),
-    address: yup.string().trim().required(EditProfile?.message?.address),
   });
   const Edit = () => {
     navigation.navigate("EditProfile");
   };
   const methods = useForm({
     resolver: yupResolver(loginSchema),
-    defaultValues: {
-      email: "toan@gmail.com",
-      dateOfBirth: date,
-    },
+    values: userData,
   });
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
+    getValues,
   } = methods;
 
   const data = [
@@ -67,6 +65,31 @@ export default function DetailProfile() {
     },
   ];
 
+  const GetDetailProfile = async () => {
+    if (user.id) {
+      getData(`/users/${user.id}`)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setTimeout(() => {
+        GetDetailProfile();
+      }, 10);
+      return () => {};
+    }, [])
+  );
+
+  useEffect(() => {
+    GetDetailProfile();
+  }, [user]);
+
   return (
     <View style={styles.body}>
       <View style={styles.container}>
@@ -79,7 +102,7 @@ export default function DetailProfile() {
               <View style={styles.avatarContainer}>
                 <Image
                   source={{
-                    uri: "https://firebasestorage.googleapis.com/v0/b/swd-longchim.appspot.com/o/376577375_998270051209102_4679797004619533760_n.jpg?alt=media&token=90d94961-bc1b-46e4-b60a-ad731606b13b",
+                    uri: "https://www.shutterstock.com/image-vector/worker-engineer-technician-mechanic-avatar-260nw-1983689702.jpg",
                   }}
                   style={styles.avatar}
                 />
@@ -92,38 +115,20 @@ export default function DetailProfile() {
                   control={control}
                   keyboardType="default" // Set keyboardType for First Name input
                   errors={errors} // Pass errors object
-                  edit={false}
                   required
+                  edit={false}
                 />
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    gap: 10,
-                  }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <ComSelect
-                      label={EditProfile?.label?.gender}
-                      name="gender"
-                      control={control}
-                      // keyboardType="visible-password" // Set keyboardType for Last Name input
-                      errors={errors} // Pass errors object
-                      options={data}
-                      required
-                    />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <ComDatePicker
-                      label={EditProfile?.label?.dateOfBirth}
-                      placeholder={EditProfile?.placeholder?.dateOfBirth}
-                      name="dateOfBirth"
-                      control={control}
-                      errors={errors} // Pass errors object
-                      required
-                    />
-                  </View>
-                </View>
+                <ComInput
+                  label={"Tên tài khoản"}
+                  placeholder={"Tên tài khoản"}
+                  name="username"
+                  control={control}
+                  keyboardType="default" // Set keyboardType for First Name input
+                  errors={errors} // Pass errors object
+                  required
+                  edit={false}
+                />
+
                 <ComInput
                   label={EditProfile?.label?.phoneNumber}
                   placeholder={EditProfile?.placeholder?.phoneNumber}
@@ -131,8 +136,8 @@ export default function DetailProfile() {
                   control={control}
                   keyboardType="default" // Set keyboardType for First Name input
                   errors={errors} // Pass errors object
-                  edit={false}
                   required
+                  edit={false}
                 />
                 <ComInput
                   label={EditProfile?.label?.email}
@@ -144,32 +149,12 @@ export default function DetailProfile() {
                   errors={errors} // Pass errors object
                   required
                 />
-                <ComInput
-                  label={EditProfile?.label?.idNumber}
-                  placeholder={EditProfile?.placeholder?.idNumber}
-                  name="idNumber"
-                  edit={false}
-                  control={control}
-                  errors={errors} // Pass errors object
-                  required
-                />
-                <ComInput
-                  label={EditProfile?.label?.address}
-                  placeholder={EditProfile?.placeholder?.address}
-                  name="address"
-                  edit={false}
-                  control={control}
-                  errors={errors} // Pass errors object
-                  required
-                />
               </View>
               <View style={{ height: 100 }}></View>
             </ScrollView>
           </View>
           <View>
-            <ComButton onPress={Edit}>
-              {EditProfile?.button?.EditProfile}
-            </ComButton>
+            <ComButton onPress={Edit}>Chỉnh sửa</ComButton>
           </View>
         </FormProvider>
       </View>

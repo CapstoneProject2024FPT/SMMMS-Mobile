@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as yup from "yup";
@@ -12,11 +12,14 @@ import Avatar from "./Avatar";
 import ComDatePicker from "../../../Components/ComInput/ComDatePicker";
 import { ScrollView } from "react-native";
 import { firebaseImg } from "../../../api/firebaseImg";
+import { useStorage } from "../../../hooks/useLocalStorage";
+import { getData, putData } from "../../../api/api";
 
 export default function EditProfile() {
   const [date, setDate] = useState(new Date());
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState("null");
+  const [userData, setUserData] = useState({});
+  const [user, setData] = useStorage("user", {});
   const navigation = useNavigation();
   const {
     text: {
@@ -28,10 +31,6 @@ export default function EditProfile() {
   const loginSchema = yup.object().shape({
     fullName: yup.string().trim().required(EditProfile?.message?.fullName),
     gender: yup.string().trim().required(EditProfile?.message?.gender),
-    dateOfBirth: yup
-      .string()
-      .trim()
-      .required(EditProfile?.message?.dateOfBirth),
     phoneNumber: yup
       .string()
       .trim()
@@ -41,16 +40,11 @@ export default function EditProfile() {
       .email(EditProfile?.message?.emailInvalid)
       .trim()
       .required(EditProfile?.message?.email),
-    idNumber: yup.string().trim().required(EditProfile?.message?.idNumber),
-    address: yup.string().trim().required(EditProfile?.message?.address),
   });
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
-    defaultValues: {
-      email: "toan@gmail.com",
-      dateOfBirth: date,
-    },
+    values: userData,
   });
   const {
     control,
@@ -58,9 +52,15 @@ export default function EditProfile() {
     formState: { errors },
   } = methods;
   const handleEdit = (data) => {
-    firebaseImg(image).then((imageUrl) => {
-      console.log("Image uploaded successfully:", imageUrl);
-    });
+    console.log(11111111111111, data);
+    putData(`/users`, user.id, data)
+      .then((res) => {
+        console.log(res);
+        navigation.navigate("DetailProfile");
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
   };
   const data = [
     {
@@ -73,9 +73,29 @@ export default function EditProfile() {
     },
   ];
 
-  const setImg = (data) => {
-    setImage(data);
+  const GetDetailProfile = async () => {
+    if (user.id) {
+      getData(`/users/${user.id}`)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      GetDetailProfile();
+      return () => {};
+    }, [])
+  );
+
+  useEffect(() => {
+    GetDetailProfile();
+  }, [user]);
+
   return (
     <View style={styles.body}>
       <View style={styles.container}>
@@ -85,7 +105,7 @@ export default function EditProfile() {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
             >
-              <Avatar image={image} setImg={setImg} />
+              <Avatar image={image} />
               <View style={{ gap: 10 }}>
                 <ComInput
                   label={EditProfile?.label?.fullName}
@@ -96,35 +116,17 @@ export default function EditProfile() {
                   errors={errors} // Pass errors object
                   required
                 />
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    gap: 10,
-                  }}
-                >
-                  <View style={{ flex: 1 }}>
-                    <ComSelect
-                      label={EditProfile?.label?.gender}
-                      name="gender"
-                      control={control}
-                      // keyboardType="visible-password" // Set keyboardType for Last Name input
-                      errors={errors} // Pass errors object
-                      options={data}
-                      required
-                    />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <ComDatePicker
-                      label={EditProfile?.label?.dateOfBirth}
-                      placeholder={EditProfile?.placeholder?.dateOfBirth}
-                      name="dateOfBirth"
-                      control={control}
-                      errors={errors} // Pass errors object
-                      required
-                    />
-                  </View>
-                </View>
+                <ComInput
+                  label={"Tên tài khoản"}
+                  placeholder={"Tên tài khoản"}
+                  name="username"
+                  control={control}
+                  keyboardType="default" // Set keyboardType for First Name input
+                  errors={errors} // Pass errors object
+                  required
+                  edit={false}
+                />
+
                 <ComInput
                   label={EditProfile?.label?.phoneNumber}
                   placeholder={EditProfile?.placeholder?.phoneNumber}
@@ -140,22 +142,6 @@ export default function EditProfile() {
                   name="email"
                   control={control}
                   keyboardType="default" // Set keyboardType for First Name input
-                  errors={errors} // Pass errors object
-                  required
-                />
-                <ComInput
-                  label={EditProfile?.label?.idNumber}
-                  placeholder={EditProfile?.placeholder?.idNumber}
-                  name="idNumber"
-                  control={control}
-                  errors={errors} // Pass errors object
-                  required
-                />
-                <ComInput
-                  label={EditProfile?.label?.address}
-                  placeholder={EditProfile?.placeholder?.address}
-                  name="address"
-                  control={control}
                   errors={errors} // Pass errors object
                   required
                 />

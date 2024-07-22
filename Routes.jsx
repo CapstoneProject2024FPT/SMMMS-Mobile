@@ -53,6 +53,11 @@ const Routes = () => {
           component={MyBottomNavigationBar}
         />
         <Stack.Screen
+          name="HomeUser"
+          options={{ headerLeft: null, headerShown: false }}
+          component={MyBottomNavigationBarUser}
+        />
+        <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
           name="Login"
           component={Login}
@@ -286,6 +291,84 @@ function MyBottomNavigationBar() {
         component={VisitationSchedule}
         // component={ServicePackages}
       />
+      {/* <Tab.Screen
+        name="HealthCondition"
+        options={{ headerShown: false }}
+        component={HealthMonitor}
+      /> */}
+      <Tab.Screen
+        name="Notification"
+        options={{ headerShown: false }}
+        component={Notification}
+      />
+      {/* <Tab.Screen
+        name="Account"
+        options={{ headerShown: false }}
+        component={VisitationSchedule}
+      /> */}
+      <Tab.Screen
+        name="Account"
+        options={{ headerShown: false }}
+        component={UserProfile}
+      />
+    </Tab.Navigator>
+  );
+}
+function MyBottomNavigationBarUser() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarHideOnKeyboard: true,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: "absolute",
+          bottom: 10,
+          left: 10,
+          right: 10,
+          elevation: 0,
+          backgroundColor: "#14A499",
+          borderRadius: 15,
+          height: 90,
+          elevation: 30, // Bóng đổ cho Android
+          shadowColor: "#000", // Màu của bóng đổ cho iOS
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.4,
+          shadowRadius: 3.84,
+          elevation: 5,
+        },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "Nav1" : "Nav1_1";
+          } else if (route.name === "Visitation") {
+            iconName = focused ? "Nav2" : "Nav2_1";
+          } else if (route.name === "HealthCondition") {
+            iconName = focused ? "Nav3" : "Nav3_1";
+          } else if (route.name === "Notification") {
+            iconName = focused ? "Nav4" : "Nav4_1";
+          } else if (route.name === "Account") {
+            iconName = focused ? "Nav5" : "Nav5_1";
+          }
+
+          // You can return any component that you like here!
+          // return <Ionicons name={iconName} size={size} color={"back"} />;
+          return <ComIcon icon={iconName} />;
+        },
+      })}
+      // keyboardShouldPersistTaps="handled"
+    >
+      <Tab.Screen
+        name="Home"
+        options={{ headerShown: false }}
+        component={HomeStackScreen}
+      />
+      {/* <Tab.Screen
+        name="Visitation"
+        options={{ headerShown: false }}
+        component={VisitationSchedule}
+        // component={ServicePackages}
+      /> */}
       {/* <Tab.Screen
         name="HealthCondition"
         options={{ headerShown: false }}

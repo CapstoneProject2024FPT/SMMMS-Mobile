@@ -7,7 +7,7 @@ import plusIcon from "../../../../assets/profile_icons/plus.png";
 export default function Avatar({ image, setImg }) {
   const [avatarSource, setAvatarSource] = useState(
     image ||
-      "https://firebasestorage.googleapis.com/v0/b/swd-longchim.appspot.com/o/376577375_998270051209102_4679797004619533760_n.jpg?alt=media&token=90d94961-bc1b-46e4-b60a-ad731606b13b"
+      "https://www.shutterstock.com/image-vector/worker-engineer-technician-mechanic-avatar-260nw-1983689702.jpg"
   );
 
   const handleChoosePhoto = async () => {
@@ -29,16 +29,10 @@ export default function Avatar({ image, setImg }) {
           source={{
             uri: avatarSource?.assets
               ? avatarSource?.assets[0]?.uri
-              : "https://firebasestorage.googleapis.com/v0/b/swd-longchim.appspot.com/o/376577375_998270051209102_4679797004619533760_n.jpg?alt=media&token=90d94961-bc1b-46e4-b60a-ad731606b13b",
+              : "https://www.shutterstock.com/image-vector/worker-engineer-technician-mechanic-avatar-260nw-1983689702.jpg",
           }}
           style={styles.avatar}
         />
-        <TouchableOpacity
-          onPress={handleChoosePhoto}
-          style={styles.iconContainer}
-        >
-          <Image source={plusIcon} style={styles.icon} />
-        </TouchableOpacity>
       </View>
     </View>
   );

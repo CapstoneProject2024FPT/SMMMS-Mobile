@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { FormProvider, set, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
@@ -9,6 +9,7 @@ import ComLoading from "../../Components/ComLoading/ComLoading";
 import ComAddPackage from "./ComAddPackage";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { getData } from "../../api/api";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function DeliveryService() {
   const {
@@ -41,12 +42,25 @@ export default function DeliveryService() {
     setLoading(!loading);
   };
 
-  useEffect(() => {
-    const type = "Delivery"; // Define the type here
+  const GetDeliveryTask = async () => {
+    const type = "Delivery";
     getData(`task?Type=${type}`).then((data) => {
       setData(data.data);
     });
+  };
+
+  useEffect(() => {
+    GetDeliveryTask;
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      setTimeout(() => {
+        GetDeliveryTask();
+      }, 10);
+      return () => {};
+    }, [])
+  );
 
   return (
     <>
@@ -81,19 +95,30 @@ export default function DeliveryService() {
           </View>
         </ScrollView> */}
 
-        <ComLoading show={loading}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
+        {data.length !== 0 ? (
+          <ComLoading show={loading}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={{ marginTop: "2%" }}>
+                {data?.map((value, index) => (
+                  <ComAddPackage key={index} data={value} />
+                ))}
+              </View>
+              <View style={{ height: 120 }}></View>
+            </ScrollView>
+          </ComLoading>
+        ) : (
+          <Text
+            style={{
+              textAlign: "center",
+              marginTop: "10%",
+            }}
           >
-            <View style={{ marginTop: "2%" }}>
-              {data?.map((value, index) => (
-                <ComAddPackage key={index} data={value} />
-              ))}
-            </View>
-            <View style={{ height: 120 }}></View>
-          </ScrollView>
-        </ComLoading>
+            Không có nhiệm vụ được giao
+          </Text>
+        )}
       </View>
       {/* <View style={{ height: 100, backgroundColor: "#fff" }}></View> */}
     </>

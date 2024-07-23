@@ -16,7 +16,7 @@ import { getData } from "../../api/api";
 
 export default function AddingServiceDetail({ route }) {
   const [data, setData] = useState({});
-  const [warrantyDetail, setWarrantyDetail] = useState([]);
+  const [warrantyDetail, setWarrantyDetail] = useState({});
 
   const {
     text: { addingPackages },
@@ -27,9 +27,8 @@ export default function AddingServiceDetail({ route }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getData(`warranty/${id}`);
+      const res = await getData(`task/${id}`);
       setData(res.data);
-      setWarrantyDetail(res.data.warrantyDetail);
     };
     fetchData();
   }, [id]);
@@ -79,41 +78,40 @@ export default function AddingServiceDetail({ route }) {
           {/* Warranty Details */}
           <Text style={styles.contentBold}>Warranty Details:</Text>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("AddingServiceRegister", { id: data.id });
-            }}
+          // onPress={() => {
+          //   navigation.navigate("AddingServiceRegister", { id: data.id });
+          // }}
           >
-            {warrantyDetail.map((item, index) => (
-              <View key={index} style={styles.warrantyDetail}>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>ID</Text>: {item.id}
-                </Text>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>Status</Text>:{" "}
-                  {item.status}
-                </Text>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>Create Date</Text>:{" "}
-                  {formatDateTime(item.createDate)}
-                </Text>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>Start Date</Text>:{" "}
-                  {formatDateTime(item.startDate)}
-                </Text>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>Description</Text>:{" "}
-                  {item.description}
-                </Text>
-              </View>
-            ))}
+            <View style={styles.warrantyDetail}>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>ID</Text>:{" "}
+                {data?.warrantyDetail?.id}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Status</Text>:{" "}
+                {data?.warrantyDetail?.status}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Create Date</Text>:{" "}
+                {formatDateTime(data?.warrantyDetail?.createDate)}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Start Date</Text>:{" "}
+                {formatDateTime(data?.warrantyDetail?.startDate)}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Description</Text>:{" "}
+                {data?.warrantyDetail?.description}
+              </Text>
+            </View>
           </TouchableOpacity>
         </ScrollView>
 
         <View style={{ marginVertical: 20 }}>
           <ComSelectButton
-            onPress={() => {
-              navigation.navigate("AddingServiceRegister", { id: data.id });
-            }}
+          // onPress={() => {
+          //   navigation.navigate("AddingServiceRegister", { id: data.id });
+          // }}
           >
             Báo cáo
           </ComSelectButton>

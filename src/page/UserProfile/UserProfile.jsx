@@ -15,38 +15,18 @@ export default function UserProfile() {
     {
       name: "Hợp đồng",
       link: "Contracts",
-      icon: contract,
-    },
-    {
-      name: "Hóa đơn",
-      link: "",
-      icon: bill,
     },
     {
       name: "Lịch sử dịch vụ",
       link: "ServiceHistory",
-      icon: serviceHistory,
     },
-  ];
-  const data2 = [
     {
       name: "Đổi mật khẩu",
       link: "ChangePassword",
-      icon: changePassword,
-    },
-    {
-      name: "Thông báo",
-      link: "",
-      icon: notification,
-    },
-    {
-      name: "Đánh giá",
-      link: "",
-      icon: feedback,
     },
   ];
 
-  const data3 = [
+  const data2 = [
     {
       name: "Đăng xuất",
       link: "Login",
@@ -57,8 +37,7 @@ export default function UserProfile() {
     <View style={styles.body}>
       <HeaderUser />
       <MenuList data={data} />
-      <MenuList data={data2} />
-      <MenuList data={data3} colorRed={true} />
+      <MenuList data={data2} colorRed={true} />
     </View>
   );
 }

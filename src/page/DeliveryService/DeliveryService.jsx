@@ -76,25 +76,6 @@ export default function DeliveryService() {
             errors={errors}
           />
         </FormProvider>
-        {/* <ScrollView
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          style={styles?.scrollView}
-        >
-          <View style={styles?.buttonContainer}>
-            <ComSelectButton onPress={check} check={select}>
-              Tất cả
-            </ComSelectButton>
-            <ComSelectButton onPress={check1} check={select1}>
-              Định kỳ
-            </ComSelectButton>
-            <ComSelectButton onPress={check2} check={select2}>
-              Yêu cầu
-            </ComSelectButton>
-          </View>
-        </ScrollView> */}
-
         {data.length !== 0 ? (
           <ComLoading show={loading}>
             <ScrollView

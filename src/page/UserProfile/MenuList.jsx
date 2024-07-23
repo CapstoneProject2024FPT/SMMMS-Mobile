@@ -10,7 +10,6 @@ const MenuItem = ({ iconName, text, link, colorRed }) => {
   };
   return (
     <TouchableOpacity style={styles.menuItem} onPress={() => press()}>
-      <Image source={iconName} style={styles.image} />
       {colorRed ? (
         <Text style={{ fontSize: 20, color: "red", fontWeight: "bold" }}>
           {text}
@@ -52,10 +51,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 4,
     gap: 10,
-  },
-  image: {
-    width: 30,
-    height: 30,
   },
   text: {
     fontSize: 16,

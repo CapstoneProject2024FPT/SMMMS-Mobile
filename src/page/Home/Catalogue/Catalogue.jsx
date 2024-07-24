@@ -19,7 +19,7 @@ export default function Catalogue() {
     <View style={styles?.body}>
       <TopicContent>{Home?.catalogue}</TopicContent>
       <View style={styles.comCatalogue}>
-        <TouchableOpacity onPress={() => goto("AddingService")}>
+        <TouchableOpacity onPress={() => goto("WarrantyService")}>
           <ComCatalogue
             url={
               "https://vn-test-11.slatic.net/p/00ecfe3cf218d389c26a65066e16ad37.png"
@@ -28,7 +28,7 @@ export default function Catalogue() {
             Bảo hành
           </ComCatalogue>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>goto("DeliveryService")}>
+        <TouchableOpacity onPress={() => goto("DeliveryService")}>
           <ComCatalogue
             url={
               "https://i.pinimg.com/originals/2e/f2/f3/2ef2f3289430a49cfbd483bf44dd2f17.jpg"

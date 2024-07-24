@@ -7,12 +7,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ComLoading from "../../Components/ComLoading/ComLoading";
 import ComAddPackage from "./ComAddPackage";
-import { LanguageContext } from "./../../contexts/LanguageContext";
+import { LanguageContext } from "../../contexts/LanguageContext";
 import { getData } from "../../api/api";
 import { useStorage } from "../../hooks/useLocalStorage";
 import { useFocusEffect } from "@react-navigation/native";
 
-export default function AddingServicePackages() {
+export default function WarrantyService() {
   const [user, setUserData] = useStorage("user", {});
   const {
     text: { addingPackages },

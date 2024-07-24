@@ -14,9 +14,12 @@ import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
 import { getData } from "../../api/api";
 
-export default function AddingServiceDetail({ route }) {
+export default function WarrantyServiceDetail({ route }) {
   const [data, setData] = useState({});
   const [warrantyDetail, setWarrantyDetail] = useState({});
+  const [image, setImage] = useState({
+    img: "https://halivina.vn/upload/images/11(1).jpg",
+  });
 
   const {
     text: { addingPackages },
@@ -27,7 +30,7 @@ export default function AddingServiceDetail({ route }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getData(`task/${id}`);
+      const res = await getData(`warranty/${id}`);
       setData(res.data);
     };
     fetchData();
@@ -36,6 +39,13 @@ export default function AddingServiceDetail({ route }) {
   const formatDateTime = (date) => {
     const d = new Date(date);
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  };
+
+  const formatAddress = (address) => {
+    if (!address) {
+      return "Địa chỉ không xác định";
+    }
+    return ` ${address?.note}, ${address?.ward?.name}, ${address?.district?.name}, ${address?.city?.name}`;
   };
 
   const handleBackPress = () => {
@@ -51,6 +61,16 @@ export default function AddingServiceDetail({ route }) {
         >
           <Image source={backArrowWhite} style={styles.backIcon} />
         </TouchableOpacity>
+        <Image
+          source={{ uri: image.img }}
+          style={{
+            width: "100%",
+            height: 200,
+            resizeMode: "stretch",
+            borderRadius: 5,
+            marginBottom: 10,
+          }}
+        />
       </View>
 
       <View style={styles.body}>
@@ -69,39 +89,34 @@ export default function AddingServiceDetail({ route }) {
             <Text style={{ fontSize: 16 }}>: {data?.type}</Text>
           </Text>
           {/* mô tả */}
-          <Text style={styles.contentBold}>
-            {addingPackages?.package?.description}
+          <Text>
+            <Text style={styles.contentBold}>Mô tả</Text>:{" "}
+            <Text style={{ fontSize: 16 }}>{data?.description}</Text>
           </Text>
-
-          <Text style={{ fontSize: 16 }}>{data?.description}</Text>
 
           {/* Warranty Details */}
           <Text style={styles.contentBold}>Warranty Details:</Text>
           <TouchableOpacity
-          // onPress={() => {
-          //   navigation.navigate("AddingServiceRegister", { id: data.id });
-          // }}
+            onPress={() => {
+              navigation.navigate("AddingServiceRegister", { id: data.id });
+            }}
           >
             <View style={styles.warrantyDetail}>
-              <Text style={styles.detailText}>
+              {/* <Text style={styles.detailText}>
                 <Text style={{ fontWeight: "bold" }}>ID</Text>:{" "}
                 {data?.warrantyDetail?.id}
-              </Text>
+              </Text> */}
               <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Status</Text>:{" "}
-                {data?.warrantyDetail?.status}
-              </Text>
-              <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Create Date</Text>:{" "}
+                <Text style={{ fontWeight: "bold" }}>Ngày tạo</Text>:{" "}
                 {formatDateTime(data?.warrantyDetail?.createDate)}
               </Text>
               <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Start Date</Text>:{" "}
+                <Text style={{ fontWeight: "bold" }}>Ngày bắt đầu</Text>:{" "}
                 {formatDateTime(data?.warrantyDetail?.startDate)}
               </Text>
               <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Description</Text>:{" "}
-                {data?.warrantyDetail?.description}
+                <Text style={{ fontWeight: "bold" }}>Địa chỉ</Text>:{" "}
+                {formatAddress(data?.address)}
               </Text>
             </View>
           </TouchableOpacity>
@@ -109,9 +124,9 @@ export default function AddingServiceDetail({ route }) {
 
         <View style={{ marginVertical: 20 }}>
           <ComSelectButton
-          // onPress={() => {
-          //   navigation.navigate("AddingServiceRegister", { id: data.id });
-          // }}
+            onPress={() => {
+              navigation.navigate("DeliveryConfirm", { id: data.id });
+            }}
           >
             Báo cáo
           </ComSelectButton>

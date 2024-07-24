@@ -16,7 +16,9 @@ export default function ComAddPackage({ data }) {
     <TouchableOpacity
       style={styles.body}
       onPress={() => {
-        navigation.navigate("AddingServiceDetail", { id: data.id });
+        navigation.navigate("WarrantyServiceDetail", {
+          id: data.warrantyDetail.warrantyId,
+        });
       }}
     >
       {/* <Image
@@ -43,7 +45,7 @@ export default function ComAddPackage({ data }) {
         </Text>
         <Text>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>Mô tả</Text>
-          <Text>: {data?.description}</Text>
+          <Text>: {data?.warrantyDetail?.description}</Text>
         </Text>
       </View>
     </TouchableOpacity>

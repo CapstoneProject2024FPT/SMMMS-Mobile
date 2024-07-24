@@ -14,8 +14,6 @@ import HealthMonitor from "./src/page/HealthMonitor/HealthMonitor";
 import Notification from "./src/page/Notification/Notification";
 import HealthMonitorDetail from "./src/page/HealthMonitorDetail/HealthMonitorDetail";
 import VisitationSchedule from "./src/page/VisitationSchedule/VisitationSchedule";
-import AddingServicePackages from "./src/page/AddingServicePackage/AddingServicePackage";
-import AddingServiceDetail from "./src/page/AddingServiceDetail/AddingServiceDetail";
 import AddingServiceElderRegister from "./src/page/AddingServiceRegister/AddingServiceElderRegister";
 import AddingServiceCalendarRegister from "./src/page/AddingServiceRegister/AddingServiceCalendarRegister";
 import ServicePayment from "./src/page/ServicePayment/ServicePayment";
@@ -40,6 +38,8 @@ import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
 import DeliveryService from "./src/page/DeliveryService/DeliveryService";
 import DeliveryDetail from "./src/page/DeliveryDetail/DeliveryDetail";
 import DeliveryConfirm from "./src/page/DeliveryDetail/DeliveryConfirm";
+import WarrantyService from "./src/page/WarrantyService/WarrantyService";
+import WarrantyServiceDetail from "./src/page/WarrantyServiceDetail/WarrantyServiceDetail";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,8 +84,8 @@ const Routes = () => {
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="AddingService"
-          component={AddingServicePackages}
+          name="WarrantyService"
+          component={WarrantyService}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
@@ -104,8 +104,8 @@ const Routes = () => {
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceDetail"
-          component={AddingServiceDetail}
+          name="WarrantyServiceDetail"
+          component={WarrantyServiceDetail}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}

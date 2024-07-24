@@ -5,12 +5,9 @@ import { LanguageContext } from "./../../contexts/LanguageContext";
 import { Controller, Form, FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ComInputSearch from "../../Components/ComInput/ComInputSearch";
 import { ScrollView } from "react-native";
-import { ActivityIndicator } from "react-native";
 import ComLoading from "../../Components/ComLoading/ComLoading";
-import Visitation from "../../../assets/VisitationSchedule/VisitationSchedule.png";
-import ComButton from "../../Components/ComButton/ComButton";
+import WarrantySchedule from "../../../assets/WarrantySchedule/WarrantySchedule.png";
 import { useNavigation } from "@react-navigation/native";
 
 export default function VisitationSchedule() {
@@ -112,7 +109,7 @@ export default function VisitationSchedule() {
     <View style={styles.body}>
       <View style={{ gap: 10 }}>
         <View style={styles.imageBody}>
-          <Image source={Visitation} style={styles.image} />
+          <Image source={WarrantySchedule} style={styles.image} />
         </View>
       </View>
       <View

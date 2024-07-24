@@ -8,11 +8,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import ComElder from "../../Components/ComElder/ComElder";
 import ComButton from "../../Components/ComButton/ComButton";
-import ComPeriodCalendar from "../AddingServiceRegister/ComPeriodCalendar";
 import ComSelectedOneDate from "./../../Components/ComDate/ComSelectedOneDate";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 

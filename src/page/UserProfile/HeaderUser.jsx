@@ -1,9 +1,13 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import editIcon from "../../../assets/profile_icons/edit.png";
+import { useStorage } from "../../hooks/useLocalStorage";
+import { getData } from "../../api/api";
 
 export default function HeaderUser() {
+  const [user, setData] = useStorage("user", {});
+  const [userData, setUserData] = useState({});
   const navigation = useNavigation();
 
   const edit = () => {
@@ -11,20 +15,43 @@ export default function HeaderUser() {
   };
   const DetailProfile = () => {
     navigation.navigate("DetailProfile");
-    
-  }
+  };
+
+  const GetDetailProfile = async () => {
+    if (user.id) {
+      getData(`/users/${user.id}`)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      GetDetailProfile();
+      return () => {};
+    }, [])
+  );
+
+  useEffect(() => {
+    GetDetailProfile();
+  }, [user]);
+
   return (
     <View style={styles.body}>
       <TouchableOpacity style={styles.container} onPress={DetailProfile}>
         <Image
           source={{
-            uri: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
+            uri: "https://www.shutterstock.com/image-vector/worker-engineer-technician-mechanic-avatar-260nw-1983689702.jpg",
           }}
           style={styles.avatar}
         />
         <View style={styles.info}>
-          <Text style={styles.name}>Cao Văn B</Text>
-          <Text style={styles.phone}>0909799799</Text>
+          <Text style={styles.name}>{userData?.fullName}</Text>
+          <Text style={styles.phone}>{userData?.phoneNumber}</Text>
         </View>
         <TouchableOpacity style={styles.editButton} onPress={edit}>
           <Image
@@ -65,6 +92,6 @@ const styles = StyleSheet.create({
   },
   editIcon: {
     width: 30,
-    height:30,
+    height: 30,
   },
 });

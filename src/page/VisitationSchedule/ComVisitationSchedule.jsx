@@ -20,7 +20,12 @@ export default function ComVisitationSchedule({ data }) {
       <View style={styles.day}>
         <Text style={styles.textYear}>2024</Text>
         <View
-          style={{ backgroundColor: "#33B39C", paddingHorizontal:10 ,paddingVertical:4, borderRadius: 10 }}
+          style={{
+            backgroundColor: "#33B39C",
+            paddingHorizontal: 10,
+            paddingVertical: 4,
+            borderRadius: 10,
+          }}
         >
           <Text style={styles.textDay}>08</Text>
           <Text style={styles.textDay}>- -</Text>
@@ -34,7 +39,7 @@ export default function ComVisitationSchedule({ data }) {
           <Text style={{ fontWeight: "bold", fontSize: 16 }}>
             Người Đăng Ký
           </Text>
-          <Text>: Thảo My</Text>
+          <Text>: Nguyễn Tiến Tài</Text>
         </Text>
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 16 }}>

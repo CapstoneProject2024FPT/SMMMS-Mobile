@@ -52,7 +52,6 @@ export default function EditProfile() {
     formState: { errors },
   } = methods;
   const handleEdit = (data) => {
-    console.log(11111111111111, data);
     putData(`/users`, user.id, data)
       .then((res) => {
         console.log(res);

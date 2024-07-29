@@ -18,7 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ComInput from "../../Components/ComInput/ComInput";
 import { putData } from "../../api/api";
 
-export default function DeliveryConfirm() {
+export default function WarrantyConfirm() {
   const [data, setData] = useState({});
 
   const loginSchema = yup.object().shape({
@@ -29,7 +29,7 @@ export default function DeliveryConfirm() {
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      note: "Chú thích",
+      note: "",
     },
   });
 
@@ -51,10 +51,10 @@ export default function DeliveryConfirm() {
 
   const handleUpdate = async (data) => {
     try {
-      const param = { status: "Completed", note: data.note };
-      const res = await putData(`orders`, id, param);
+      const param = { status: "Completed", description: data.note };
+      const res = await putData(`warrantyDetail`, id, param);
       console.log(res);
-      navigation.navigate("DeliveryService");
+      navigation.navigate("WarrantyService");
     } catch (error) {
       console.log(error);
     }

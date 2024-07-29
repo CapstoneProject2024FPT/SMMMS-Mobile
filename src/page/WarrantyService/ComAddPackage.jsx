@@ -11,25 +11,16 @@ export default function ComAddPackage({ data }) {
   } = useContext(LanguageContext);
 
   const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       style={styles.body}
       onPress={() => {
         navigation.navigate("WarrantyServiceDetail", {
           id: data.warrantyDetail.warrantyId,
+          warrantyId: data.warrantyDetail.id,
         });
       }}
     >
-      {/* <Image
-        source={{ uri: data?.img }}
-        style={{
-          width: 100,
-          height: 100,
-          borderRadius: 10,
-          objectFit: "fill",
-        }}
-      /> */}
       <View style={styles?.container}>
         <Text style={{ fontWeight: "bold", fontSize: 16 }}>{data?.type}</Text>
         <Text style={{ flexDirection: "row" }}>

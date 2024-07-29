@@ -26,14 +26,20 @@ export default function WarrantyServiceDetail({ route }) {
   } = useContext(LanguageContext);
 
   const navigation = useNavigation();
-  const { id } = route.params;
-
+  const { id, warrantyId } = route.params;
   useEffect(() => {
-    const fetchData = async () => {
+    const WarranttData = async () => {
       const res = await getData(`warranty/${id}`);
       setData(res.data);
     };
-    fetchData();
+
+    const WarranttDetailData = async () => {
+      const res = await getData(`warrantyDetail/${warrantyId}`);
+      setWarrantyDetail(res.data);
+    };
+
+    WarranttData();
+    WarranttDetailData();
   }, [id]);
 
   const formatDateTime = (date) => {
@@ -95,24 +101,32 @@ export default function WarrantyServiceDetail({ route }) {
           </Text>
 
           {/* Warranty Details */}
-          <Text style={styles.contentBold}>Warranty Details:</Text>
+          <Text style={styles.contentBold}>Thông tin bảo hành:</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AddingServiceRegister", { id: data.id });
+              navigation.navigate("WarrantyComponentConfirm", {
+                id: data.inventory.machinery.id,
+                inventoryId: data.inventory.id,
+                warrantyId: warrantyId,
+              });
             }}
           >
             <View style={styles.warrantyDetail}>
-              {/* <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>ID</Text>:{" "}
-                {data?.warrantyDetail?.id}
-              </Text> */}
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Số serial</Text>:{" "}
+                {data?.inventory?.serialNumber}
+              </Text>
+              <Text style={styles.detailText}>
+                <Text style={{ fontWeight: "bold" }}>Tên máy</Text>:{" "}
+                {data?.inventory?.machinery?.name}
+              </Text>
               <Text style={styles.detailText}>
                 <Text style={{ fontWeight: "bold" }}>Ngày tạo</Text>:{" "}
-                {formatDateTime(data?.warrantyDetail?.createDate)}
+                {formatDateTime(data?.createDate)}
               </Text>
               <Text style={styles.detailText}>
                 <Text style={{ fontWeight: "bold" }}>Ngày bắt đầu</Text>:{" "}
-                {formatDateTime(data?.warrantyDetail?.startDate)}
+                {formatDateTime(data?.startDate)}
               </Text>
               <Text style={styles.detailText}>
                 <Text style={{ fontWeight: "bold" }}>Địa chỉ</Text>:{" "}
@@ -120,16 +134,40 @@ export default function WarrantyServiceDetail({ route }) {
               </Text>
             </View>
           </TouchableOpacity>
+
+          {/* Warranty Detail */}
+          <Text style={styles.contentBold}>Bộ phận sửa:</Text>
+          <View style={styles.warrantyDetail}>
+            {warrantyDetail?.inventoryChanges?.map((item, index) => (
+              <View key={index}>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>Số serial</Text>:{" "}
+                  {item.newInventory.serialNumber}
+                </Text>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>
+                    Tên bộ phận thay thế
+                  </Text>
+                  : {}
+                  {item.newInventory.componentName}
+                </Text>
+              </View>
+            ))}
+          </View>
         </ScrollView>
 
         <View style={{ marginVertical: 20 }}>
-          <ComSelectButton
-            onPress={() => {
-              navigation.navigate("DeliveryConfirm", { id: data.id });
-            }}
-          >
-            Báo cáo
-          </ComSelectButton>
+          {warrantyDetail?.status !== "Completed" && (
+            <ComSelectButton
+              onPress={() => {
+                navigation.navigate("WarrantyConfirm", {
+                  id: warrantyDetail.id,
+                });
+              }}
+            >
+              Báo cáo
+            </ComSelectButton>
+          )}
         </View>
       </View>
     </>

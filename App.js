@@ -1,3 +1,6 @@
+if (__DEV__) {
+  require("./ReactotronConfig");
+}
 import React from "react";
 import Routes from "./Routes.jsx";
 import { LanguageProvider } from "./src/contexts/LanguageContext";
@@ -7,7 +10,7 @@ const App = () => {
   return (
     <LanguageProvider>
       {/* <Styles> */}
-        <Routes />
+      <Routes />
       {/* </Styles> */}
     </LanguageProvider>
 

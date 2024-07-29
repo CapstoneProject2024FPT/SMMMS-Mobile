@@ -7,11 +7,15 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
+import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
-import { getData } from "../../api/api";
+import { getData, putData } from "../../api/api";
+import { FormProvider, useForm } from "react-hook-form";
+import ComInput from "../../Components/ComInput/ComInput";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function DeliveryDetail({ route }) {
   const [data, setData] = useState({});
@@ -19,6 +23,24 @@ export default function DeliveryDetail({ route }) {
   const [image, setImage] = useState({
     img: "https://file.hstatic.net/200000472237/article/ung-dung-ship-hang_fed864d839d04fe1b035df0d991a8d0b.png",
   });
+
+  const loginSchema = yup.object().shape({
+    note: yup.string().trim().required("Vui lòng nhập chú thích"),
+    // chon: yup.string().required("vui long nhap mk"),
+  });
+
+  const methods = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      note: "",
+    },
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const {
     text: { addingPackages },
@@ -56,6 +78,17 @@ export default function DeliveryDetail({ route }) {
   const formatDateTime = (date) => {
     const d = new Date(date);
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+  };
+
+  const handleUpdate = async (data) => {
+    try {
+      const param = { status: "Completed", note: data.note };
+      const res = await putData(`orders`, details?.order?.id, param);
+      console.log(res);
+      navigation.navigate("DeliveryService");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleBackPress = () => {
@@ -130,12 +163,34 @@ export default function DeliveryDetail({ route }) {
 
         <View style={{ marginVertical: 20 }}>
           {details?.status === "Process" && (
+            <View>
+              <Text
+                style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10 }}
+              >
+                Điền thông tin xác nhận
+              </Text>
+              <FormProvider {...methods}>
+                <View style={{ width: "100%", gap: 10 }}>
+                  <ComInput
+                    label={"Chú thích"}
+                    placeholder={""}
+                    name="note"
+                    control={control}
+                    keyboardType="default" // Set keyboardType for First Name input
+                    errors={errors} // Pass errors object
+                    required
+                  />
+                </View>
+              </FormProvider>
+            </View>
+          )}
+        </View>
+
+        <View style={{ marginVertical: 20 }}>
+          {details?.status === "Process" && (
             <ComSelectButton
-              onPress={() => {
-                navigation.navigate("DeliveryConfirm", {
-                  id: details?.order?.id,
-                });
-              }}
+              title={addingPackages}
+              onPress={handleSubmit(handleUpdate)}
             >
               Xác nhận
             </ComSelectButton>

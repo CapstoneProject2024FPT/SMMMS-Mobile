@@ -115,11 +115,6 @@ export default function LoginScreen() {
               <ComTitleLink to={"ForgetPassword"}>
                 {Login?.link?.forgetPassword}
               </ComTitleLink>
-              <ComTitle> {Login?.link?.labelRegister}</ComTitle>
-
-              <ComTitleLink to={"Register"} style={{ color: "#33B39C" }}>
-                {Login?.link?.register}
-              </ComTitleLink>
             </View>
             <ComTitle style={{ color: "red" }}>{errorMessage}</ComTitle>
             <ComButton onPress={handleSubmit(handleLogin)}>

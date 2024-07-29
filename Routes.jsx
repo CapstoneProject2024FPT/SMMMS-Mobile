@@ -10,7 +10,6 @@ import RegisterSuccess from "./src/page/Register/RegisterSuccess";
 import Otp from "./src/page/Otp/Otp";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
 import ServicePackages from "./src/page/ServicePackages/ServicePackages";
-import HealthMonitor from "./src/page/HealthMonitor/HealthMonitor";
 import Notification from "./src/page/Notification/Notification";
 import HealthMonitorDetail from "./src/page/HealthMonitorDetail/HealthMonitorDetail";
 import VisitationSchedule from "./src/page/VisitationSchedule/VisitationSchedule";
@@ -40,6 +39,9 @@ import DeliveryDetail from "./src/page/DeliveryDetail/DeliveryDetail";
 import DeliveryConfirm from "./src/page/DeliveryDetail/DeliveryConfirm";
 import WarrantyService from "./src/page/WarrantyService/WarrantyService";
 import WarrantyServiceDetail from "./src/page/WarrantyServiceDetail/WarrantyServiceDetail";
+import WarrantyComponentConfirm from "./src/page/WarrantyServiceDetail/WarrantyComponentConfirm";
+import WarrantyNewComponent from "./src/page/WarrantyServiceDetail/WarrantyNewComponents";
+import WarrantyConfirm from "./src/page/WarrantyServiceDetail/WarrantyConfirm";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,6 +91,26 @@ const Routes = () => {
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
+          name="WarrantyServiceDetail"
+          component={WarrantyServiceDetail}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="WarrantyComponentConfirm"
+          component={WarrantyComponentConfirm}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="WarrantyNewComponent"
+          component={WarrantyNewComponent}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="WarrantyConfirm"
+          component={WarrantyConfirm}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
           name="DeliveryService"
           component={DeliveryService}
         />
@@ -101,11 +123,6 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           name="DeliveryConfirm"
           component={DeliveryConfirm}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="WarrantyServiceDetail"
-          component={WarrantyServiceDetail}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
@@ -248,7 +265,7 @@ function MyBottomNavigationBar() {
           left: 10,
           right: 10,
           elevation: 0,
-          backgroundColor: "#14A499",
+          backgroundColor: "#f2eb18",
           borderRadius: 15,
           height: 90,
           elevation: 30, // Bóng đổ cho Android
@@ -291,21 +308,11 @@ function MyBottomNavigationBar() {
         component={VisitationSchedule}
         // component={ServicePackages}
       />
-      {/* <Tab.Screen
-        name="HealthCondition"
-        options={{ headerShown: false }}
-        component={HealthMonitor}
-      /> */}
       <Tab.Screen
         name="Notification"
         options={{ headerShown: false }}
         component={Notification}
       />
-      {/* <Tab.Screen
-        name="Account"
-        options={{ headerShown: false }}
-        component={VisitationSchedule}
-      /> */}
       <Tab.Screen
         name="Account"
         options={{ headerShown: false }}

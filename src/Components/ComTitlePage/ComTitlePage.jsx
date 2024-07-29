@@ -12,9 +12,9 @@ export default function ComTitlePage({ children }) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 30,
-    color: "#33B39C",
+    color: "#dbd523",
     fontWeight: "bold",
-    textAlign:'center'
+    textAlign: "center",
   },
   view: {
     padding: 8,

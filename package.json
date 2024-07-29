@@ -20,6 +20,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.6.8",
     "expo": "^51.0.2",
+    "expo-checkbox": "~3.0.0",
     "expo-device": "~5.9.4",
     "expo-image-picker": "^15.0.5",
     "expo-notifications": "~0.27.7",
@@ -33,6 +34,7 @@
     "react-native-calendars": "^1.1304.1",
     "react-native-date-picker": "^5.0.3",
     "react-native-dotenv": "^3.4.11",
+    "react-native-element-dropdown": "^2.12.1",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-image-picker": "^7.1.2",
@@ -49,7 +51,8 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "reactotron-react-native": "^5.1.7"
   },
   "private": true
 }

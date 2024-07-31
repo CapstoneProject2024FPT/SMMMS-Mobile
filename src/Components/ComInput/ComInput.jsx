@@ -15,6 +15,8 @@ const ComInput = (
     password,
     edit,
     placeholder,
+    multiline,
+    numberOfLines,
   },
   ...props
 ) => {
@@ -44,10 +46,12 @@ const ComInput = (
                 onChangeText={(value) => onChange(value)}
                 value={value}
                 placeholder={placeholder}
-                keyboardType={keyboardType} // Set keyboardType here
+                keyboardType={keyboardType}
                 ref={ref}
                 editable={edit}
                 secureTextEntry
+                multiline={multiline}
+                numberOfLines={numberOfLines}
                 {...props}
               />
               {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
@@ -71,6 +75,8 @@ const ComInput = (
                 keyboardType={keyboardType} // Set keyboardType here
                 ref={ref}
                 editable={edit}
+                multiline={multiline} // Set multiline prop
+                numberOfLines={numberOfLines} // Set numberOfLines prop
                 style={[
                   styles.input,
                   {
@@ -107,7 +113,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#fff",
-    height: 70,
+    height: 50,
     padding: 10,
     borderRadius: 10,
     borderWidth: 1,

@@ -6,6 +6,10 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
@@ -14,7 +18,7 @@ import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
 import { getData, putData } from "../../api/api";
 import { FormProvider, useForm } from "react-hook-form";
-import ComInput from "../../Components/ComInput/ComInput";
+import ComTextArea from "../../Components/ComInput/ComTextArea";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function DeliveryDetail({ route }) {
@@ -26,7 +30,6 @@ export default function DeliveryDetail({ route }) {
 
   const loginSchema = yup.object().shape({
     note: yup.string().trim().required("Vui lòng nhập chú thích"),
-    // chon: yup.string().required("vui long nhap mk"),
   });
 
   const methods = useForm({
@@ -47,7 +50,7 @@ export default function DeliveryDetail({ route }) {
   } = useContext(LanguageContext);
 
   const navigation = useNavigation();
-  const { id } = route.params;
+  const { id, orderId } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,108 +99,117 @@ export default function DeliveryDetail({ route }) {
   };
 
   return (
-    <>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={handleBackPress}
-          style={styles.backIconContainer}
-        >
-          <Image source={backArrowWhite} style={styles.backIcon} />
-        </TouchableOpacity>
-        <Image
-          source={{ uri: image.img }}
-          style={{
-            width: "100%",
-            height: 200,
-            resizeMode: "cover",
-            borderRadius: 5,
-            marginBottom: 10,
-          }}
-        />
-      </View>
-
-      <View style={styles.body}>
-        <ScrollView>
-          <Text style={{ flexDirection: "row", marginBottom: 10 }}>
-            <Text style={styles.contentBold}>Phân loại</Text>
-            <Text style={{ fontSize: 16 }}>: {formatType(details?.type)}</Text>
-          </Text>
-          <Text style={{ flexDirection: "row", marginBottom: 10 }}>
-            <Text style={styles.contentBold}>Trạng thái</Text>
-            <Text style={{ fontSize: 16 }}>
-              : {formatStatus(details?.status)}
-            </Text>
-          </Text>
-
-          {/* Delivery Details */}
-          <Text style={styles.contentBold}>Chi tiết:</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("AddingServiceRegister", { id: details.id });
-            }}
+            onPress={handleBackPress}
+            style={styles.backIconContainer}
           >
-            <View style={styles.deliveryDetail}>
-              <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Mã hóa đơn</Text>:{" "}
-                {details?.order?.invoiceCode}
-              </Text>
-              <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Ngày tạo</Text>:{" "}
-                {formatDateTime(details?.createDate)}
-              </Text>
-              <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Khách hàng</Text>:{" "}
-                {details?.address?.account?.fullName}
-              </Text>
-              <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Địa chỉ</Text>:{" "}
-                {formatAddress(details?.address)}
-              </Text>
-              <Text style={styles.detailText}>
-                <Text style={{ fontWeight: "bold" }}>Chú thích</Text>:{" "}
-                {/* {item.description} */}
-              </Text>
-            </View>
+            <Image source={backArrowWhite} style={styles.backIcon} />
           </TouchableOpacity>
-        </ScrollView>
+          <Image
+            source={{ uri: image.img }}
+            style={{
+              width: "100%",
+              height: 200,
+              resizeMode: "cover",
+              borderRadius: 5,
+              marginBottom: 10,
+            }}
+          />
+        </View>
 
-        <View style={{ marginVertical: 20 }}>
-          {details?.status === "Process" && (
-            <View>
-              <Text
-                style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10 }}
-              >
-                Điền thông tin xác nhận
+        <View style={styles.body}>
+          <ScrollView>
+            <Text style={{ flexDirection: "row", marginBottom: 10 }}>
+              <Text style={styles.contentBold}>Phân loại</Text>
+              <Text style={{ fontSize: 16 }}>
+                : {formatType(details?.type)}
               </Text>
-              <FormProvider {...methods}>
-                <View style={{ width: "100%", gap: 10 }}>
-                  <ComInput
-                    label={"Chú thích"}
-                    placeholder={""}
-                    name="note"
-                    control={control}
-                    keyboardType="default" // Set keyboardType for First Name input
-                    errors={errors} // Pass errors object
-                    required
-                  />
-                </View>
-              </FormProvider>
-            </View>
-          )}
-        </View>
+            </Text>
+            <Text style={{ flexDirection: "row", marginBottom: 10 }}>
+              <Text style={styles.contentBold}>Trạng thái</Text>
+              <Text style={{ fontSize: 16 }}>
+                : {formatStatus(details?.status)}
+              </Text>
+            </Text>
 
-        <View style={{ marginVertical: 20 }}>
-          {details?.status === "Process" && (
-            <ComSelectButton
-              title={addingPackages}
-              onPress={handleSubmit(handleUpdate)}
+            <Text style={styles.contentBold}>Chi tiết:</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("OrderDetails", {
+                  orderId: orderId,
+                });
+              }}
             >
-              Xác nhận
-            </ComSelectButton>
-          )}
+              <View style={styles.deliveryDetail}>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>Mã hóa đơn</Text>:{" "}
+                  {details?.order?.invoiceCode}
+                </Text>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>Ngày tạo</Text>:{" "}
+                  {formatDateTime(details?.createDate)}
+                </Text>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>Khách hàng</Text>:{" "}
+                  {details?.address?.account?.fullName}
+                </Text>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>Địa chỉ</Text>:{" "}
+                  {formatAddress(details?.address)}
+                </Text>
+                <Text style={styles.detailText}>
+                  <Text style={{ fontWeight: "bold" }}>Ghi chú</Text>:{" "}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <View style={{ marginVertical: 20 }}>
+            {details?.status === "Process" && (
+              <View>
+                <Text
+                  style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10 }}
+                >
+                  Điền thông tin xác nhận
+                </Text>
+                <FormProvider {...methods}>
+                  <View style={{ width: "100%", gap: 10 }}>
+                    <ComTextArea
+                      label={"Chú thích"}
+                      placeholder={""}
+                      name="note"
+                      control={control}
+                      keyboardType="default"
+                      errors={errors}
+                      required
+                      multiline={true}
+                      numberOfLines={4}
+                    />
+                  </View>
+                </FormProvider>
+              </View>
+            )}
+          </View>
+
+          <View style={{ marginVertical: 20 }}>
+            {details?.status === "Process" && (
+              <ComSelectButton
+                title={addingPackages}
+                onPress={handleSubmit(handleUpdate)}
+              >
+                Xác nhận
+              </ComSelectButton>
+            )}
+          </View>
         </View>
-      </View>
-    </>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 

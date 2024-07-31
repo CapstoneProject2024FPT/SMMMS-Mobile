@@ -42,6 +42,7 @@ import WarrantyServiceDetail from "./src/page/WarrantyServiceDetail/WarrantyServ
 import WarrantyComponentConfirm from "./src/page/WarrantyServiceDetail/WarrantyComponentConfirm";
 import WarrantyNewComponent from "./src/page/WarrantyServiceDetail/WarrantyNewComponents";
 import WarrantyConfirm from "./src/page/WarrantyServiceDetail/WarrantyConfirm";
+import OrderDetails from "./src/page/DeliveryDetail/OrderDetails";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -118,6 +119,11 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           name="DeliveryDetail"
           component={DeliveryDetail}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="OrderDetails"
+          component={OrderDetails}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}

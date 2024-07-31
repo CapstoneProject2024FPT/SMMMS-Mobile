@@ -29,18 +29,12 @@ export default function ComAddPackage({ data }) {
     <TouchableOpacity
       style={styles.body}
       onPress={() => {
-        navigation.navigate("DeliveryDetail", { id: data.id });
+        navigation.navigate("DeliveryDetail", {
+          id: data.id,
+          orderId: data.order.id,
+        });
       }}
     >
-      {/* <Image
-        source={{ uri: data?.img }}
-        style={{
-          width: 100,
-          height: 100,
-          borderRadius: 10,
-          objectFit: "fill",
-        }}
-      /> */}
       <View style={styles?.container}>
         <Text style={{ fontWeight: "bold", fontSize: 16 }}>
           Mã hóa đơn: {data?.order?.invoiceCode}

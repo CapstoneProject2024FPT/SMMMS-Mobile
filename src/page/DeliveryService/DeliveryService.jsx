@@ -1,5 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  RefreshControl,
+} from "react-native";
 import { FormProvider, set, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
@@ -10,14 +16,24 @@ import ComAddPackage from "./ComAddPackage";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { getData } from "../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
+import { useStorage } from "../../hooks/useLocalStorage";
 
 export default function DeliveryService() {
+  const [user, setUserData] = useStorage("user", {});
   const {
     text: { addingPackages },
     setLanguage,
   } = useContext(LanguageContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    GetDeliveryTask();
+    setRefreshing(false);
+  }, []);
 
   const searchSchema = yup.object().shape({
     search: yup.string(),
@@ -44,14 +60,20 @@ export default function DeliveryService() {
 
   const GetDeliveryTask = async () => {
     const type = "Delivery";
-    getData(`task?Type=${type}`).then((data) => {
-      setData(data.data);
-    });
+    if (user.id) {
+      getData(`task?Type=${type}&AccountId=${user.id}`)
+        .then((data) => {
+          setData(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {
     GetDeliveryTask;
-  }, []);
+  }, [user.id]);
 
   useFocusEffect(
     useCallback(() => {
@@ -59,7 +81,7 @@ export default function DeliveryService() {
         GetDeliveryTask();
       }, 10);
       return () => {};
-    }, [])
+    }, [user.id])
   );
 
   return (
@@ -76,11 +98,14 @@ export default function DeliveryService() {
             errors={errors}
           />
         </FormProvider>
-        {data.length !== 0 ? (
+        {data.some((item) => item.status === "Process") ? (
           <ComLoading show={loading}>
             <ScrollView
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             >
               <View style={{ marginTop: "2%" }}>
                 {data?.map((value, index) => (
@@ -91,17 +116,26 @@ export default function DeliveryService() {
             </ScrollView>
           </ComLoading>
         ) : (
-          <Text
-            style={{
-              textAlign: "center",
-              marginTop: "10%",
-            }}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
-            Không có nhiệm vụ được giao
-          </Text>
+            <View>
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginTop: "10%",
+                }}
+              >
+                Không có nhiệm vụ được giao
+              </Text>
+            </View>
+          </ScrollView>
         )}
       </View>
-      {/* <View style={{ height: 100, backgroundColor: "#fff" }}></View> */}
     </>
   );
 }

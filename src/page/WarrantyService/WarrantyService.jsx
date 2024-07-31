@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, RefreshControl } from "react-native";
 import { FormProvider, set, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
@@ -20,6 +20,14 @@ export default function WarrantyService() {
   } = useContext(LanguageContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    GetWarrantyTask();
+    setRefreshing(false);
+  }, []);
 
   const searchSchema = yup.object().shape({
     search: yup.string(),
@@ -88,6 +96,9 @@ export default function WarrantyService() {
           <ScrollView
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
             <View style={{ marginTop: "2%" }}>
               {data?.map((value, index) => (

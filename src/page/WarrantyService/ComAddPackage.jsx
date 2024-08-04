@@ -10,6 +10,20 @@ export default function ComAddPackage({ data }) {
     setLanguage,
   } = useContext(LanguageContext);
 
+  const formatStatus = (status) => {
+    if (status === "Process") {
+      return "Đang xử lý";
+    } else if (status === "Completed") {
+      return "Hoàn thành";
+    }
+  };
+
+  const formatType = (type) => {
+    if (type === "Warranty") {
+      return "Bảo hành";
+    }
+  };
+
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -22,17 +36,19 @@ export default function ComAddPackage({ data }) {
       }}
     >
       <View style={styles?.container}>
-        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{data?.type}</Text>
+        <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+          {formatType(data?.type)}
+        </Text>
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>Trạng thái</Text>
-          <Text>: {data?.status}</Text>
+          <Text>: {formatStatus(data?.status)}</Text>
         </Text>
 
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>
             {addingPackages?.package?.category}
           </Text>
-          <Text>: {data?.type}</Text>
+          <Text>: {formatType(data?.type)}</Text>
         </Text>
         <Text>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>Mô tả</Text>

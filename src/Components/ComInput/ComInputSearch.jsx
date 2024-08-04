@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
-import { StyleSheet, View, Text, TextInput, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import iconSource from "../../../assets/Search.png";
 
 iconSource;
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "gray",
     fontWeight: "bold",
-    borderColor: "#33B39C",
+    borderColor: "#000",
 
     elevation: 10, // Bóng đổ cho Android
     shadowColor: "#000", // Màu của bóng đổ cho iOS

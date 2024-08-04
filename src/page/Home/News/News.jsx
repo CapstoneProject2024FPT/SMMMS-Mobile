@@ -8,7 +8,7 @@ import ComSelectButton from "../../../Components/ComButton/ComSelectButton";
 import ComNew from "./ComNew";
 
 export default function News() {
-  const [data, setData] = useState([{}, {}, {}, {}, {}]);
+  const [data, setData] = useState([{}, {}, {}]);
   const {
     text: { Home },
   } = useContext(LanguageContext);
@@ -49,13 +49,8 @@ export default function News() {
           }
           context="Máy tiện cnc"
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s. Lorem Ipsum is simply dummy text of the printing and
-          typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text ever since the 1500s. Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s.
+          Máy tiện cnc là một trong những thiết bị công nghiệp quan trọng, giúp
+          gia công các chi tiết kim loại theo yêu cầu.
         </ComNew>
       ))}
     </View>

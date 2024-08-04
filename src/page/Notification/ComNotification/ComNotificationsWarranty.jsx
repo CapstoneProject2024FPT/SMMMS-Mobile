@@ -1,16 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import ComTitle from "./../../../Components/ComTitle/ComTitle";
+import ComTitle from "../../../Components/ComTitle/ComTitle";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ComNotification({ tile, data }) {
+export default function ComNotificationWarranty({ tile, data }) {
   const navigation = useNavigation();
   const formatStatus = (status) => {
     if (status === "Completed") {
       return "Đã hoàn thành";
     }
   };
-
   return (
     <View style={styles.main}>
       <ComTitle style={{ fontSize: 24, marginBottom: 10 }}>{tile}</ComTitle>
@@ -23,9 +22,9 @@ export default function ComNotification({ tile, data }) {
             <TouchableOpacity
               style={[styles.body]}
               onPress={() => {
-                navigation.navigate("DeliveryDetail", {
-                  id: value.id,
-                  orderId: value.order.id,
+                navigation.navigate("WarrantyServiceDetail", {
+                  id: value.warrantyDetail.warrantyId,
+                  warrantyId: value.warrantyDetail.id,
                 });
               }}
             >
@@ -34,7 +33,7 @@ export default function ComNotification({ tile, data }) {
                   numberOfLines={1}
                   style={{ fontWeight: "bold", fontSize: 14 }}
                 >
-                  Mã đơn hàng: {value?.order?.invoiceCode}
+                  Mã bảo hành: {value?.warrantyDetail?.id}
                 </Text>
                 <Text
                   numberOfLines={1}

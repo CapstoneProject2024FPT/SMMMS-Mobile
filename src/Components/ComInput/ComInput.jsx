@@ -39,7 +39,7 @@ const ComInput = (
                 style={[
                   styles.input,
                   {
-                    borderColor: errorMessage ? "red" : "#33B39C",
+                    borderColor: errorMessage ? "red" : "#000",
                   },
                 ]}
                 onBlur={onBlur}
@@ -80,7 +80,7 @@ const ComInput = (
                 style={[
                   styles.input,
                   {
-                    borderColor: errorMessage ? "red" : "#33B39C",
+                    borderColor: errorMessage ? "red" : "#000",
                   },
                 ]}
                 {...props}
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#33B39C",
+    borderColor: "#000",
     fontWeight: "bold",
     color: "#000",
     elevation: 5, // Bóng đổ cho Android

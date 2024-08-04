@@ -1,60 +1,47 @@
-import { useState, useEffect, useRef } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import ComNotification from "./ComNotification/ComNotifications";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
+import { getData } from "../../api/api";
+import { useStorage } from "../../hooks/useLocalStorage";
+import ComNotificationWarranty from "./ComNotification/ComNotificationsWarranty";
 
 export default function Notification({}) {
-  const [select, setSelect] = useState(false);
-  const [select1, setSelect1] = useState(true);
-  const [select2, setSelect2] = useState(true);
-  const [select3, setSelect3] = useState(true);
-  const data = [
-    {
-      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
-      name: "Bảo dưỡng máy tiện cnc ",
-      day: "10:00 - 14/05/2024 ",
-    },
-    {
-      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
-      name: "Bảo dưỡng máy tiện cnc ",
-      day: "10:00 - 14/05/2024 ",
-    },
-    {
-      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
-      name: "Bảo dưỡng máy tiện cnc ",
-      day: "10:00 - 14/05/2024 ",
-    },
-    {
-      img: "https://thietbithanhphat.vn/data/news/6049/may-tien-hong-ky-hk-t16.jpg",
-      name: "Bảo dưỡng máy tiện cnc ",
-      day: "10:00 - 14/05/2024 ",
-    },
-  ];
-  const check = () => {
-    setSelect(false);
-    setSelect1(true);
-    setSelect2(true);
-    setSelect3(true);
+  const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filterType, setFilterType] = useState("Delivery");
+  const [user, setUserData] = useStorage("user", {});
+
+  const getAllTask = async () => {
+    if (user.id) {
+      getData(`task?Status=Completed&AccountId=${user.id}`)
+        .then((res) => {
+          setTasks(res.data);
+          filterTasks(res.data, filterType);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    }
   };
-  const check1 = () => {
-    setSelect(true);
-    setSelect1(false);
-    setSelect3(true);
-    setSelect2(true);
+
+  const filterTasks = (tasks, type) => {
+    const filtered = tasks.filter((task) => task.type === type);
+    setFilteredTasks(filtered);
   };
-  const check2 = () => {
-    setSelect(true);
-    setSelect1(true);
-    setSelect3(true);
-    setSelect2(false);
+
+  useEffect(() => {
+    getAllTask();
+  }, [user.id]);
+
+  useEffect(() => {
+    filterTasks(tasks, filterType);
+  }, [filterType, tasks]);
+
+  const handleFilterChange = (type) => {
+    setFilterType(type);
   };
-  const check3 = () => {
-    setSelect(true);
-    setSelect1(true);
-    setSelect3(false);
-    setSelect2(true);
-  };
+
   return (
     <View style={styles.body}>
       <ScrollView
@@ -64,17 +51,17 @@ export default function Notification({}) {
         style={styles?.scrollView}
       >
         <View style={styles?.buttonContainer}>
-          <ComSelectButton onPress={check} check={select}>
-            Tất cả
+          <ComSelectButton
+            onPress={() => handleFilterChange("Delivery")}
+            check={filterType === "Delivery"}
+          >
+            Giao hàng
           </ComSelectButton>
-          <ComSelectButton onPress={check1} check={select1}>
-            Máy khoan
-          </ComSelectButton>
-          <ComSelectButton onPress={check2} check={select2}>
-            Máy tiện
-          </ComSelectButton>
-          <ComSelectButton onPress={check3} check={select3}>
-            Máy xung điện
+          <ComSelectButton
+            onPress={() => handleFilterChange("Warranty")}
+            check={filterType === "Warranty"}
+          >
+            Bảo hành
           </ComSelectButton>
           <View style={{ width: 20 }}></View>
         </View>
@@ -84,17 +71,18 @@ export default function Notification({}) {
         style={styles?.scrollView}
         showsHorizontalScrollIndicator={false}
       >
-        <ComNotification tile={"Hôm nay"} data={data} />
-
-        <ComNotification tile={"Trước đó"} data={data} />
-        <ComNotification tile={"Trước đó"} data={data} />
-        <ComNotification tile={"Trước đó"} data={data} />
+        {filterType === "Delivery" ? (
+          <ComNotification tile={"Giao hàng"} data={filteredTasks} />
+        ) : (
+          <ComNotificationWarranty tile={"Bảo hành"} data={filteredTasks} />
+        )}
 
         <View style={{ height: 190 }}></View>
       </ScrollView>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   body: {
     flex: 1,

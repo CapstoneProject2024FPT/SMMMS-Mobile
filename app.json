@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SMMMSMobile",
-    "slug": "SMMMSMobile",
+    "slug": "smmms",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,6 +35,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "06e4e9dc-1af9-4e42-abd3-9d0c09c2b286"
+      }
+    },
+    "owner": "taismile"
   }
 }

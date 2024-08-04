@@ -36,25 +36,30 @@ import ContractDetail from "./src/page/ContractDetail/ContractDetail";
 import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
 import DeliveryService from "./src/page/DeliveryService/DeliveryService";
 import DeliveryDetail from "./src/page/DeliveryDetail/DeliveryDetail";
-import DeliveryConfirm from "./src/page/DeliveryDetail/DeliveryConfirm";
 import WarrantyService from "./src/page/WarrantyService/WarrantyService";
 import WarrantyServiceDetail from "./src/page/WarrantyServiceDetail/WarrantyServiceDetail";
 import WarrantyComponentConfirm from "./src/page/WarrantyServiceDetail/WarrantyComponentConfirm";
 import WarrantyNewComponent from "./src/page/WarrantyServiceDetail/WarrantyNewComponents";
-import WarrantyConfirm from "./src/page/WarrantyServiceDetail/WarrantyConfirm";
 import OrderDetails from "./src/page/DeliveryDetail/OrderDetails";
+import PushNotification from "./src/page/Notification/PushNotification";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Homes">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Homes"
           options={{ headerLeft: null, headerShown: false }}
           component={MyBottomNavigationBar}
         />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="PushNotification"
+          component={PushNotification}
+        />
+
         <Stack.Screen
           name="HomeUser"
           options={{ headerLeft: null, headerShown: false }}
@@ -107,11 +112,6 @@ const Routes = () => {
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="WarrantyConfirm"
-          component={WarrantyConfirm}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
           name="DeliveryService"
           component={DeliveryService}
         />
@@ -124,11 +124,6 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           name="OrderDetails"
           component={OrderDetails}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="DeliveryConfirm"
-          component={DeliveryConfirm}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
@@ -309,12 +304,6 @@ function MyBottomNavigationBar() {
         component={HomeStackScreen}
       />
       <Tab.Screen
-        name="Visitation"
-        options={{ headerShown: false }}
-        component={VisitationSchedule}
-        // component={ServicePackages}
-      />
-      <Tab.Screen
         name="Notification"
         options={{ headerShown: false }}
         component={Notification}
@@ -376,27 +365,11 @@ function MyBottomNavigationBarUser() {
         options={{ headerShown: false }}
         component={HomeStackScreen}
       />
-      {/* <Tab.Screen
-        name="Visitation"
-        options={{ headerShown: false }}
-        component={VisitationSchedule}
-        // component={ServicePackages}
-      /> */}
-      {/* <Tab.Screen
-        name="HealthCondition"
-        options={{ headerShown: false }}
-        component={HealthMonitor}
-      /> */}
       <Tab.Screen
         name="Notification"
         options={{ headerShown: false }}
         component={Notification}
       />
-      {/* <Tab.Screen
-        name="Account"
-        options={{ headerShown: false }}
-        component={VisitationSchedule}
-      /> */}
       <Tab.Screen
         name="Account"
         options={{ headerShown: false }}

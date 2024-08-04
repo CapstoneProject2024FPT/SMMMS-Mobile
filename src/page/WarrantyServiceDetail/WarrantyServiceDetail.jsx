@@ -6,13 +6,17 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  Modal,
 } from "react-native";
+import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import { useRoute } from "@react-navigation/native";
 import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
-import { getData } from "../../api/api";
+import { getData, putData } from "../../api/api"; // Make sure to import putData if it's used
+import ComTextArea from "../../Components/ComInput/ComTextArea";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
 
 export default function WarrantyServiceDetail({ route }) {
   const [data, setData] = useState({});
@@ -20,10 +24,45 @@ export default function WarrantyServiceDetail({ route }) {
   const [image, setImage] = useState({
     img: "https://halivina.vn/upload/images/11(1).jpg",
   });
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const loginSchema = yup.object().shape({
+    note: yup.string().required("Vui lòng nhập thông tin"),
+  });
+
+  const methods = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      note: "",
+    },
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = methods;
 
   const {
     text: { addingPackages },
   } = useContext(LanguageContext);
+
+  const formatStatus = (status) => {
+    if (status === "Process") {
+      return "Đang xử lý";
+    } else if (status === "Completed") {
+      return "Hoàn thành";
+    }
+  };
+
+  const formatType = (type) => {
+    if (type === "CustomerRequest") {
+      return "Yêu cầu bảo hành";
+    } else if (type === "Periodic") {
+      return "Bảo hành định kỳ";
+    }
+  };
 
   const navigation = useNavigation();
   const { id, warrantyId } = route.params;
@@ -58,6 +97,24 @@ export default function WarrantyServiceDetail({ route }) {
     navigation.goBack();
   };
 
+  const handleUpdate = async (data) => {
+    try {
+      const param = { status: "Completed", description: data.note };
+      const res = await putData(`warrantyDetail`, warrantyDetail?.id, param);
+      navigation.navigate("WarrantyService");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    reset();
+  };
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
   return (
     <>
       <View style={styles.header}>
@@ -85,14 +142,14 @@ export default function WarrantyServiceDetail({ route }) {
             style={{ fontWeight: "bold", fontSize: 20, marginBottom: 10 }}
             numberOfLines={2}
           >
-            {data?.type}
+            {formatType(data?.type)}
           </Text>
           {/* category */}
           <Text style={{ flexDirection: "row", marginBottom: 10 }}>
             <Text style={styles.contentBold}>
               {addingPackages?.package?.category}
             </Text>
-            <Text style={{ fontSize: 16 }}>: {data?.type}</Text>
+            <Text style={{ fontSize: 16 }}>: {formatType(data?.type)}</Text>
           </Text>
           {/* mô tả */}
           <Text>
@@ -138,35 +195,73 @@ export default function WarrantyServiceDetail({ route }) {
           {/* Warranty Detail */}
           <Text style={styles.contentBold}>Bộ phận sửa:</Text>
           <View style={styles.warrantyDetail}>
-            {warrantyDetail?.inventoryChanges?.map((item, index) => (
-              <View key={index}>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>Số serial</Text>:{" "}
-                  {item.newInventory.serialNumber}
-                </Text>
-                <Text style={styles.detailText}>
-                  <Text style={{ fontWeight: "bold" }}>
-                    Tên bộ phận thay thế
+            {warrantyDetail?.inventoryChanges?.length ? (
+              warrantyDetail.inventoryChanges.map((item, index) => (
+                <View key={index}>
+                  <Text style={styles.detailText}>
+                    <Text style={{ fontWeight: "bold" }}>Số serial</Text>:{" "}
+                    {item.newInventory.serialNumber}
                   </Text>
-                  : {}
-                  {item.newInventory.componentName}
-                </Text>
-              </View>
-            ))}
+                  <Text style={styles.detailText}>
+                    <Text style={{ fontWeight: "bold" }}>
+                      Tên bộ phận thay thế
+                    </Text>
+                    : {}
+                    {item.newInventory.componentName}
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text style={styles.detailText}>
+                Hiện không có bộ phận cần thay thế
+              </Text>
+            )}
           </View>
         </ScrollView>
 
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={handleCloseModal}
+        >
+          <View style={styles.centeredView}>
+            <View style={[styles.modalView, { width: 300 }]}>
+              <Text style={styles.modalText}>Báo cáo bảo hành</Text>
+              <FormProvider {...methods}>
+                <View style={{ width: "100%", marginBottom: 20 }}>
+                  <ComTextArea
+                    label={"Báo cáo"}
+                    placeholder={""}
+                    name="note"
+                    control={control}
+                    keyboardType="default"
+                    errors={errors}
+                    required
+                    multiline={true}
+                    numberOfLines={4}
+                  />
+                </View>
+              </FormProvider>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={handleSubmit(handleUpdate)}
+              >
+                <Text style={styles.textStyle}>Xác nhận</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={handleCloseModal}
+              >
+                <Text style={styles.textStyle}>Đóng</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
         <View style={{ marginVertical: 20 }}>
           {warrantyDetail?.status !== "Completed" && (
-            <ComSelectButton
-              onPress={() => {
-                navigation.navigate("WarrantyConfirm", {
-                  id: warrantyDetail.id,
-                });
-              }}
-            >
-              Báo cáo
-            </ComSelectButton>
+            <ComSelectButton onPress={openModal}>Báo cáo</ComSelectButton>
           )}
         </View>
       </View>
@@ -211,5 +306,45 @@ const styles = StyleSheet.create({
   },
   detailText: {
     fontSize: 16,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+    marginTop: 10,
+    width: "100%",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });

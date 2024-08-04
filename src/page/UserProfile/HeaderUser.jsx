@@ -6,7 +6,7 @@ import { useStorage } from "../../hooks/useLocalStorage";
 import { getData } from "../../api/api";
 
 export default function HeaderUser() {
-  const [user, setData] = useStorage("user", {});
+  const [user, setData, reLoadData] = useStorage("user", {});
   const [userData, setUserData] = useState({});
   const navigation = useNavigation();
 
@@ -32,7 +32,11 @@ export default function HeaderUser() {
   useFocusEffect(
     useCallback(() => {
       GetDetailProfile();
-      return () => {};
+      reLoadData();
+      return () => {
+        GetDetailProfile();
+        reLoadData();
+      };
     }, [])
   );
 

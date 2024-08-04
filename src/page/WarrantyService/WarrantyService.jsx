@@ -1,6 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, RefreshControl } from "react-native";
-import { FormProvider, set, useForm } from "react-hook-form";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+  Text,
+} from "react-native";
+import { FormProvider, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
 import * as yup from "yup";
@@ -56,8 +62,11 @@ export default function WarrantyService() {
     const type = "Warranty";
     if (user.id) {
       getData(`task?Type=${type}&AccountId=${user.id}`)
-        .then((data) => {
-          setData(data.data);
+        .then((response) => {
+          const filteredData = response.data.filter(
+            (task) => task.status === "Process"
+          );
+          setData(filteredData);
         })
         .catch((errors) => {
           console.log(errors);
@@ -75,7 +84,7 @@ export default function WarrantyService() {
         GetWarrantyTask();
       }, 10);
       return () => {};
-    }, [])
+    }, [user.id])
   );
 
   return (
@@ -92,7 +101,24 @@ export default function WarrantyService() {
             errors={errors}
           />
         </FormProvider>
-        <ComLoading show={loading}>
+        {data.length > 0 ? (
+          <ComLoading show={loading}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
+              <View style={{ marginTop: "2%" }}>
+                {data?.map((value, index) => (
+                  <ComAddPackage key={index} data={value} />
+                ))}
+              </View>
+              <View style={{ height: 120 }}></View>
+            </ScrollView>
+          </ComLoading>
+        ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
@@ -100,14 +126,18 @@ export default function WarrantyService() {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            <View style={{ marginTop: "2%" }}>
-              {data?.map((value, index) => (
-                <ComAddPackage key={index} data={value} />
-              ))}
+            <View>
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginTop: "10%",
+                }}
+              >
+                Không có nhiệm vụ được giao
+              </Text>
             </View>
-            <View style={{ height: 120 }}></View>
           </ScrollView>
-        </ComLoading>
+        )}
       </View>
       {/* <View style={{ height: 100, backgroundColor: "#fff" }}></View> */}
     </>

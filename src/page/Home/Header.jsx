@@ -6,7 +6,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getData } from "../../api/api";
 
 export default function Header() {
-  const [user, setData] = useStorage("user", {});
+  const [user, setData, reLoadData] = useStorage("user", {});
   const [userData, setUserData] = useState({});
 
   const GetDetailProfile = async () => {
@@ -24,7 +24,11 @@ export default function Header() {
   useFocusEffect(
     useCallback(() => {
       GetDetailProfile();
-      return () => {};
+      reLoadData();
+      return () => {
+        GetDetailProfile();
+        reLoadData();
+      };
     }, [])
   );
 
@@ -37,7 +41,7 @@ export default function Header() {
       <ComAvatar />
       <View style={styles.text}>
         <Text>Xin chào!</Text>
-        <Text style={styles.textName}>{userData?.fullName}</Text>
+        <Text style={styles.textName}>{user?.fullName}</Text>
       </View>
       <ComAvatar />
     </View>

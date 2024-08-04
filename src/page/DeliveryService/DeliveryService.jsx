@@ -6,7 +6,7 @@ import {
   Text,
   RefreshControl,
 } from "react-native";
-import { FormProvider, set, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
 import * as yup from "yup";
@@ -62,8 +62,11 @@ export default function DeliveryService() {
     const type = "Delivery";
     if (user.id) {
       getData(`task?Type=${type}&AccountId=${user.id}`)
-        .then((data) => {
-          setData(data.data);
+        .then((response) => {
+          const filteredData = response.data.filter(
+            (task) => task.status === "Process"
+          );
+          setData(filteredData);
         })
         .catch((error) => {
           console.log(error);
@@ -72,7 +75,7 @@ export default function DeliveryService() {
   };
 
   useEffect(() => {
-    GetDeliveryTask;
+    GetDeliveryTask();
   }, [user.id]);
 
   useFocusEffect(
@@ -98,7 +101,7 @@ export default function DeliveryService() {
             errors={errors}
           />
         </FormProvider>
-        {data.some((item) => item.status === "Process") ? (
+        {data.length > 0 ? (
           <ComLoading show={loading}>
             <ScrollView
               showsVerticalScrollIndicator={false}
@@ -108,7 +111,7 @@ export default function DeliveryService() {
               }
             >
               <View style={{ marginTop: "2%" }}>
-                {data?.map((value, index) => (
+                {data.map((value, index) => (
                   <ComAddPackage key={index} data={value} />
                 ))}
               </View>

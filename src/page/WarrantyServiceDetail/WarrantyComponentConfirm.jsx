@@ -65,14 +65,6 @@ export default function WarrantyComponentConfirm() {
     navigation.goBack();
   };
 
-  const formatCurrency = (number) => {
-    // Sử dụng hàm toLocaleString() để định dạng số
-    return number.toLocaleString("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    });
-  };
-
   return (
     <>
       <View style={styles.header}>
@@ -118,6 +110,9 @@ export default function WarrantyComponentConfirm() {
                   <Checkbox
                     value={selectedServices.includes(item.id)}
                     onValueChange={() => toggleServiceSelection(item.id)}
+                    color={
+                      selectedServices.includes(item.id) ? "#dbd523" : undefined
+                    }
                   />{" "}
                   <Text> {item.name}</Text>
                 </Text>

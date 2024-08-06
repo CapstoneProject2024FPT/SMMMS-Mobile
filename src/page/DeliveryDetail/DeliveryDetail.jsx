@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Modal,
+  Alert,
 } from "react-native";
 import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
@@ -103,9 +104,8 @@ export default function DeliveryDetail({ route }) {
     if (data.note) {
       try {
         const param = { status: "Completed", note: data.note };
-        console.log(11111111, details?.order?.id, param);
-        const res = await putData(`orders`, details?.order?.id, param);
-        console.log(222222222222222, res);
+        await putData(`orders`, details?.order?.id, param);
+        Alert.alert("Thông báo", "Đã giao hàng thành công");
         navigation.navigate("DeliveryService");
       } catch (error) {
         console.log(error);
@@ -117,9 +117,8 @@ export default function DeliveryDetail({ route }) {
     if (data.noteCancel) {
       try {
         const param = { status: "ReDelivery", note: data.noteCancel };
-        console.log("Second", details?.order?.id, param);
-        const res = await putData(`orders`, details?.order?.id, param);
-        console.log(res);
+        await putData(`orders`, details?.order?.id, param);
+        Alert.alert("Thông báo", "Giao hàng thất bại");
         navigation.navigate("DeliveryService");
       } catch (error) {
         console.log(error);

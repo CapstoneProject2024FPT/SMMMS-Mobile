@@ -8,6 +8,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Modal,
+  Alert,
 } from "react-native";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
 import { LanguageContext } from "../../contexts/LanguageContext";
@@ -19,15 +20,13 @@ import {
 import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { getData, putData } from "../../api/api";
 import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import RadioButton from "./RadioComponent"; // Import the RadioButton component
+import RadioButton from "./RadioComponent";
 import ComInput from "../../Components/ComInput/ComInput";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import ComSelectedOneDate from "../../Components/ComDate/ComSelectedOneDate";
 import { useStorage } from "../../hooks/useLocalStorage";
-import { LogBox } from "react-native";
 
 export default function WarrantyNewComponent() {
   const route = useRoute();
@@ -162,12 +161,6 @@ export default function WarrantyNewComponent() {
     setSelectedDate(data);
   };
 
-  const formatSelectedDate = () => {
-    if (!selectedDate) return null;
-    const date = new Date(selectedDate);
-    return date.toISOString(); // This will return the date in the format YYYY-MM-DDTHH:mm:ss.SSSZ
-  };
-
   const renderItem = ({ item }) => (
     <View>
       <View style={styles.componentContainer}>
@@ -209,14 +202,6 @@ export default function WarrantyNewComponent() {
               handleDropdownChange(item.id, value);
               setFocusedDropdown(null);
             }}
-            renderLeftIcon={() => (
-              <AntDesign
-                style={styles.icon}
-                color={focusedDropdown === item.id ? "blue" : "black"}
-                name="Safety"
-                size={20}
-              />
-            )}
           />
         </View>
       )}
@@ -232,6 +217,7 @@ export default function WarrantyNewComponent() {
       inventoryUpdates: generateInventoryUpdates(),
     })
       .then((res) => {
+        Alert.alert("Thông báo", "Đã kiểm tra xong");
         navigation.navigate("WarrantyService");
         console.log("res", res);
       })
@@ -271,7 +257,7 @@ export default function WarrantyNewComponent() {
             data={dropdownArray}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View>
+              <View key={item.id}>
                 <Text style={{ fontSize: 16 }}>{item.name}</Text>
                 <Text style={{ fontSize: 16 }}>{item.value.label}</Text>
               </View>
@@ -283,12 +269,12 @@ export default function WarrantyNewComponent() {
               style={{
                 marginTop: 15,
                 marginBottom: 10,
-                borderColor: "#33B39C",
+                borderColor: "#000",
                 borderWidth: 1,
                 borderRadius: 10,
                 padding: 5,
                 width: "45%",
-                backgroundColor: "#33B39C",
+                backgroundColor: "#dbd523",
               }}
               onPress={() => setOpenPopUp(!openPopUp)}
             >
@@ -297,10 +283,10 @@ export default function WarrantyNewComponent() {
                   fontSize: 16,
                   fontWeight: "bold",
                   textAlign: "center",
-                  color: "#fff",
+                  color: "#000",
                 }}
               >
-                Ngày bảo hành dự kiến
+                Chọn bảo hành dự kiến
               </Text>
             </TouchableOpacity>
             <Modal animationType="slide" visible={openPopUp}>
@@ -310,6 +296,14 @@ export default function WarrantyNewComponent() {
                 openPopUp={() => setOpenPopUp(!openPopUp)}
               />
             </Modal>
+            <View>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Ngày bảo hành dự kiến:{" "}
+                {selectedDate && !isNaN(new Date(selectedDate).getTime())
+                  ? new Date(selectedDate).toLocaleDateString()
+                  : "Chưa chọn ngày"}
+              </Text>
+            </View>
           </View>
           <View>
             <FormProvider {...methods}>

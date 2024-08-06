@@ -11,14 +11,8 @@ import Otp from "./src/page/Otp/Otp";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
 import ServicePackages from "./src/page/ServicePackages/ServicePackages";
 import Notification from "./src/page/Notification/Notification";
-import HealthMonitorDetail from "./src/page/HealthMonitorDetail/HealthMonitorDetail";
-import VisitationSchedule from "./src/page/VisitationSchedule/VisitationSchedule";
-import AddingServiceElderRegister from "./src/page/AddingServiceRegister/AddingServiceElderRegister";
-import AddingServiceCalendarRegister from "./src/page/AddingServiceRegister/AddingServiceCalendarRegister";
-import ServicePayment from "./src/page/ServicePayment/ServicePayment";
 import ServiceHistory from "./src/page/ServiceHistory/ServiceHistory/ServiceHistory";
 import ServiceHistoryDetail from "./src/page/ServiceHistory/ServiceHistoryDetail/ServiceHistoryDetail";
-import CancelRenewSuccess from "./src/page/ServiceHistory/ServiceHistoryDetail/CancelRenewSuccess";
 import CreateFeedback from "./src/page/Feedback/CreateFeedback";
 import UserProfile from "./src/page/UserProfile/UserProfile";
 import EditProfile from "./src/page/UserProfile/EditProfile/EditProfile";
@@ -29,8 +23,6 @@ import ResetPassword from "./src/page/ForgetPassword/ResetPassword";
 import ResetPasswordSuccess from "./src/page/ForgetPassword/ResetPasswordSuccess";
 import ChangePassword from "./src/page/ChangePassword/ChangePassword";
 import ChangePasswordSuccess from "./src/page/ChangePassword/ChangePasswordSuccess";
-import RegisterVisitation from "./src/page/RegisterVisitation/RegisterVisitation";
-import RegisterVisitationSuccess from "./src/page/RegisterVisitation/RegisterVisitationSuccess";
 import Contracts from "./src/page/Contract/Contracts";
 import ContractDetail from "./src/page/ContractDetail/ContractDetail";
 import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
@@ -127,21 +119,6 @@ const Routes = () => {
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceRegister"
-          component={AddingServiceElderRegister}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceCalendarRegister"
-          component={AddingServiceCalendarRegister}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ServicePayment"
-          component={ServicePayment}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
           name="ServiceHistory"
           component={ServiceHistory}
         />
@@ -152,36 +129,9 @@ const Routes = () => {
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="CancelRenewSuccess"
-          component={CancelRenewSuccess}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
           name="CreateFeedback"
           component={CreateFeedback}
         />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="HealthMonitorDetail"
-          component={HealthMonitorDetail}
-        />
-        {/* đăng ký thăm nuôi */}
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="VisitationSchedule"
-          component={VisitationSchedule}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="RegisterVisitation"
-          component={RegisterVisitation}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="RegisterVisitationSuccess"
-          component={RegisterVisitationSuccess}
-        />
-
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
           name="EditProfile"

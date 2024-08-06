@@ -1,3 +1,4 @@
+import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 
 const RadioButton = ({ selected, onPress }) => (
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   radioButtonSelected: {
-    backgroundColor: "blue",
+    backgroundColor: "#dbd523",
   },
 });
 

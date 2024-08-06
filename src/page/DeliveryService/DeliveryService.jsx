@@ -5,13 +5,13 @@ import {
   ScrollView,
   Text,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { FormProvider, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ComLoading from "../../Components/ComLoading/ComLoading";
 import ComAddPackage from "./ComAddPackage";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { getData } from "../../api/api";
@@ -51,26 +51,38 @@ export default function DeliveryService() {
     formState: { errors },
   } = methods;
 
-  const onSubmit = (data) => {
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
-    setLoading(!loading);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = await getData(
+        `task?Type=Delivery&AccountId=${user.id}&search=${data.search}`
+      );
+      const filteredData = response.data.filter(
+        (task) => task.status === "Process"
+      );
+      setData(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   const GetDeliveryTask = async () => {
     const type = "Delivery";
     if (user.id) {
-      getData(`task?Type=${type}&AccountId=${user.id}`)
-        .then((response) => {
-          const filteredData = response.data.filter(
-            (task) => task.status === "Process"
-          );
-          setData(filteredData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      setLoading(true);
+      try {
+        const response = await getData(
+          `task?Type=${type}&AccountId=${user.id}`
+        );
+        const filteredData = response.data.filter(
+          (task) => task.status === "Process"
+        );
+        setData(filteredData);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
     }
   };
 
@@ -101,23 +113,25 @@ export default function DeliveryService() {
             errors={errors}
           />
         </FormProvider>
-        {data.length > 0 ? (
-          <ComLoading show={loading}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-            >
-              <View style={{ marginTop: "2%" }}>
-                {data.map((value, index) => (
-                  <ComAddPackage key={index} data={value} />
-                ))}
-              </View>
-              <View style={{ height: 120 }}></View>
-            </ScrollView>
-          </ComLoading>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        ) : data.length > 0 ? (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <View style={{ marginTop: "2%" }}>
+              {data.map((value, index) => (
+                <ComAddPackage key={index} data={value} />
+              ))}
+            </View>
+            <View style={{ height: 120 }}></View>
+          </ScrollView>
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -159,5 +173,12 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 0,
     flexShrink: 0,
+  },
+  loadingContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    zIndex: 1,
   },
 });

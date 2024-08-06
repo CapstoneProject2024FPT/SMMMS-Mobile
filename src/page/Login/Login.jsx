@@ -36,8 +36,8 @@ export default function LoginScreen() {
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      username: "tai1234",
-      password: "12345678",
+      username: "",
+      password: "",
     },
   });
 
@@ -51,7 +51,6 @@ export default function LoginScreen() {
   const handleLogin = (data) => {
     // Xử lý đăng nhập với dữ liệu từ data
     Keyboard.dismiss();
-    console.log(data);
     // navigation.navigate("Homes", { screen: "Home" });
     postData("/auth/login", data, {})
       .then((data) => {

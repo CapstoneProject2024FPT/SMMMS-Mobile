@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Modal,
+  Alert,
 } from "react-native";
 import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
@@ -100,7 +101,8 @@ export default function WarrantyServiceDetail({ route }) {
   const handleUpdate = async (data) => {
     try {
       const param = { status: "Completed", description: data.note };
-      const res = await putData(`warrantyDetail`, warrantyDetail?.id, param);
+      await putData(`warrantyDetail`, warrantyDetail?.id, param);
+      Alert.alert("Thông báo", "Đã bảo hành xong");
       navigation.navigate("WarrantyService");
     } catch (error) {
       console.log(error);
@@ -152,7 +154,7 @@ export default function WarrantyServiceDetail({ route }) {
             <Text style={{ fontSize: 16 }}>: {formatType(data?.type)}</Text>
           </Text>
           {/* mô tả */}
-          <Text>
+          <Text style={{ flexDirection: "row", marginBottom: 10 }}>
             <Text style={styles.contentBold}>Mô tả</Text>:{" "}
             <Text style={{ fontSize: 16 }}>{data?.description}</Text>
           </Text>
@@ -161,12 +163,15 @@ export default function WarrantyServiceDetail({ route }) {
           <Text style={styles.contentBold}>Thông tin bảo hành:</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("WarrantyComponentConfirm", {
-                id: data.inventory.machinery.id,
-                inventoryId: data.inventory.id,
-                warrantyId: warrantyId,
-              });
+              if (warrantyDetail?.status !== "Completed") {
+                navigation.navigate("WarrantyComponentConfirm", {
+                  id: data.inventory.machinery.id,
+                  inventoryId: data.inventory.id,
+                  warrantyId: warrantyId,
+                });
+              }
             }}
+            disabled={warrantyDetail?.status === "Completed"}
           >
             <View style={styles.warrantyDetail}>
               <Text style={styles.detailText}>

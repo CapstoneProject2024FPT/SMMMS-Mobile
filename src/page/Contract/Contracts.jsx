@@ -22,7 +22,8 @@ export default function Contracts() {
       text: "Máy tiện cnc",
       context:
         "Máy tiện cnc là một trong những thiết bị không thể thiếu trong ngành công nghiệp cơ khí chế tạo máy. Máy tiện cnc giúp gia công các chi tiết cơ khí chính xác, nhanh chóng và tiết kiệm chi phí.",
-      category: "1111111111111",
+      category: "12345667",
+      representative: "Nguyễn Minh Phúc",
     },
   ]);
   const [loading, setLoading] = useState(false);

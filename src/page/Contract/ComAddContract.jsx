@@ -49,7 +49,7 @@ export default function ComAddContract({ data }) {
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>
             {contractsPage?.representative}
           </Text>
-          <Text>: {data?.category}</Text>
+          <Text>: {data?.representative}</Text>
         </Text>
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>

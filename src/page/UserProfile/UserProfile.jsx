@@ -16,10 +16,10 @@ export default function UserProfile() {
       name: "Hợp đồng",
       link: "Contracts",
     },
-    {
-      name: "Lịch sử dịch vụ",
-      link: "ServiceHistory",
-    },
+    // {
+    //   name: "Lịch sử dịch vụ",
+    //   link: "ServiceHistory",
+    // },
     {
       name: "Đổi mật khẩu",
       link: "ChangePassword",

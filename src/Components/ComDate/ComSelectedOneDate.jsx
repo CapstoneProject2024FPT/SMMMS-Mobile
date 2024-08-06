@@ -12,7 +12,6 @@ export default function ComSelectedOneDate({ date, openPopUp }) {
     const selectedDateMoment = moment(day.dateString);
     const now = moment();
 
-    // Calculate the next two business days (excluding weekends)
     const nextTwoBusinessDays = [];
     let tempDate = now.clone();
     while (nextTwoBusinessDays.length < 2) {
@@ -22,23 +21,20 @@ export default function ComSelectedOneDate({ date, openPopUp }) {
       }
     }
 
-    // Include today in the valid date range
     const validDates = [now, ...nextTwoBusinessDays];
 
-    // Check if selected date is today or within the next two business days
     const isValidDate = validDates.some((date) =>
       date.isSame(selectedDateMoment, "day")
     );
     if (!isValidDate) {
-      return; // Do not allow selecting dates outside the allowed range
+      return;
     }
 
-    // If already selected, deselect
     if (selectedDate && selectedDate === day.dateString) {
       setSelectedDate(null);
       date(null);
     } else {
-      setSelectedDate(day.dateString); // Select the new date
+      setSelectedDate(day.dateString);
       date(day.dateString);
     }
   };
@@ -83,7 +79,7 @@ export default function ComSelectedOneDate({ date, openPopUp }) {
           ...generateDisabledDates(),
           [selectedDate]: { selected: true, selectedColor: "#33B39C" },
         }}
-        minDate={today} // Do not allow past dates
+        minDate={today}
         hideExtraDays={true}
       />
       <TouchableOpacity

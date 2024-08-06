@@ -5,13 +5,13 @@ import {
   ScrollView,
   RefreshControl,
   Text,
+  ActivityIndicator,
 } from "react-native";
 import { FormProvider, useForm } from "react-hook-form";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import ComInputSearch from "../../Components/ComInput/ComInputSearch";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ComLoading from "../../Components/ComLoading/ComLoading";
 import ComAddPackage from "./ComAddPackage";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { getData } from "../../api/api";
@@ -27,9 +27,9 @@ export default function WarrantyService() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     GetWarrantyTask();
     setRefreshing(false);
@@ -51,26 +51,38 @@ export default function WarrantyService() {
     formState: { errors },
   } = methods;
 
-  const onSubmit = (data) => {
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
-    setLoading(!loading);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = await getData(
+        `task?Type=Warranty&AccountId=${user.id}&search=${data.search}`
+      );
+      const filteredData = response.data.filter(
+        (task) => task.status === "Process"
+      );
+      setData(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   const GetWarrantyTask = async () => {
     const type = "Warranty";
     if (user.id) {
-      getData(`task?Type=${type}&AccountId=${user.id}`)
-        .then((response) => {
-          const filteredData = response.data.filter(
-            (task) => task.status === "Process"
-          );
-          setData(filteredData);
-        })
-        .catch((errors) => {
-          console.log(errors);
-        });
+      setLoading(true);
+      try {
+        const response = await getData(
+          `task?Type=${type}&AccountId=${user.id}`
+        );
+        const filteredData = response.data.filter(
+          (task) => task.status === "Process"
+        );
+        setData(filteredData);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
     }
   };
 
@@ -101,23 +113,25 @@ export default function WarrantyService() {
             errors={errors}
           />
         </FormProvider>
-        {data.length > 0 ? (
-          <ComLoading show={loading}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-            >
-              <View style={{ marginTop: "2%" }}>
-                {data?.map((value, index) => (
-                  <ComAddPackage key={index} data={value} />
-                ))}
-              </View>
-              <View style={{ height: 120 }}></View>
-            </ScrollView>
-          </ComLoading>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        ) : data.length > 0 ? (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <View style={{ marginTop: "2%" }}>
+              {data.map((value, index) => (
+                <ComAddPackage key={index} data={value} />
+              ))}
+            </View>
+            <View style={{ height: 120 }}></View>
+          </ScrollView>
         ) : (
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -139,7 +153,6 @@ export default function WarrantyService() {
           </ScrollView>
         )}
       </View>
-      {/* <View style={{ height: 100, backgroundColor: "#fff" }}></View> */}
     </>
   );
 }
@@ -160,5 +173,12 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 0,
     flexShrink: 0,
+  },
+  loadingContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    zIndex: 1,
   },
 });

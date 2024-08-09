@@ -9,16 +9,17 @@ import {
   Modal,
   Alert,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import * as yup from "yup";
+import { useNavigation } from "@react-navigation/native";
+import { getData, putData } from "../../api/api";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
-import { useNavigation } from "@react-navigation/native";
-import { getData, putData } from "../../api/api";
-import ComTextArea from "../../Components/ComInput/ComTextArea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import ComTextArea from "../../Components/ComInput/ComTextArea";
 
 export default function WarrantyServiceDetail({ route }) {
   const [data, setData] = useState({});
@@ -27,7 +28,7 @@ export default function WarrantyServiceDetail({ route }) {
     img: "https://halivina.vn/upload/images/11(1).jpg",
   });
   const [modalVisible, setModalVisible] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   const loginSchema = yup.object().shape({
     note: yup.string().required("Vui lòng nhập thông tin"),
@@ -160,20 +161,16 @@ export default function WarrantyServiceDetail({ route }) {
           >
             {formatType(data?.type)}
           </Text>
-          {/* category */}
           <Text style={{ flexDirection: "row", marginBottom: 10 }}>
             <Text style={styles.contentBold}>
               {addingPackages?.package?.category}
             </Text>
             <Text style={{ fontSize: 16 }}>: {formatType(data?.type)}</Text>
           </Text>
-          {/* mô tả */}
           <Text style={{ flexDirection: "row", marginBottom: 10 }}>
             <Text style={styles.contentBold}>Mô tả</Text>:{" "}
             <Text style={{ fontSize: 16 }}>{data?.description}</Text>
           </Text>
-
-          {/* Warranty Details */}
           <Text style={styles.contentBold}>Thông tin bảo hành:</Text>
           <TouchableOpacity
             onPress={() => {
@@ -211,7 +208,6 @@ export default function WarrantyServiceDetail({ route }) {
             </View>
           </TouchableOpacity>
 
-          {/* Warranty Detail */}
           <Text style={styles.contentBold}>Bộ phận sửa:</Text>
           <View style={styles.warrantyDetail}>
             {warrantyDetail?.inventoryChanges?.length ? (
@@ -277,7 +273,6 @@ export default function WarrantyServiceDetail({ route }) {
             </View>
           </View>
         </Modal>
-
         <View style={{ marginVertical: 20 }}>
           {warrantyDetail?.status !== "Completed" && (
             <ComSelectButton onPress={openModal}>Báo cáo</ComSelectButton>
@@ -313,8 +308,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   backIcon: {
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
   },
   warrantyDetail: {
     marginBottom: 10,
@@ -325,6 +320,7 @@ const styles = StyleSheet.create({
   },
   detailText: {
     fontSize: 16,
+    marginBottom: 5,
   },
   centeredView: {
     flex: 1,
@@ -365,6 +361,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 18,
   },
   loadingContainer: {
     flex: 1,

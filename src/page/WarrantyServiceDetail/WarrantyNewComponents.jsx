@@ -27,6 +27,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import ComSelectedOneDate from "../../Components/ComDate/ComSelectedOneDate";
 import { useStorage } from "../../hooks/useLocalStorage";
+import {
+  launchCameraAsync,
+  launchImageLibraryAsync,
+  requestMediaLibraryPermissionsAsync,
+  requestCameraPermissionsAsync,
+} from "expo-image-picker";
 
 export default function WarrantyNewComponent() {
   const route = useRoute();
@@ -40,6 +46,9 @@ export default function WarrantyNewComponent() {
   const [openPopUp, setOpenPopUp] = useState(false);
   const [selectedDate, setSelectedDate] = useState({});
   const [user, setUserData] = useStorage("user", {});
+  //chụp ảnh
+  const [imageUri, setImageUri] = useState(null);
+  const [error, setError] = useState(null);
   const navigation = useNavigation();
 
   const loginSchema = yup.object().shape({
@@ -159,6 +168,33 @@ export default function WarrantyNewComponent() {
 
   const changeSelectedDate = (data) => {
     setSelectedDate(data);
+  };
+
+  //chụp ảnh
+  const openCamera = async () => {
+    const { status } = await requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      setError("Cần cấp quyền cho máy ảnh");
+      return;
+    }
+
+    const response = await launchCameraAsync({ mediaType: "photo" });
+    if (!response.canceled) {
+      setImageUri(response.assets[0].uri);
+    }
+  };
+
+  const openGallery = async () => {
+    const { status } = await requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      setError("Cần cấp quyền truy cập thư viện ảnh");
+      return;
+    }
+
+    const response = await launchImageLibraryAsync({ mediaType: "photo" });
+    if (!response.canceled) {
+      setImageUri(response.assets[0].uri);
+    }
   };
 
   const renderItem = ({ item }) => (
@@ -305,6 +341,27 @@ export default function WarrantyNewComponent() {
               </Text>
             </View>
           </View>
+          {/* chụp ảnh */}
+          <View>
+            {imageUri && (
+              <Image source={{ uri: imageUri }} style={styles.image} />
+            )}
+            <TouchableOpacity
+              style={{
+                marginTop: 15,
+                marginBottom: 10,
+                borderColor: "#000",
+                borderWidth: 1,
+                borderRadius: 10,
+                padding: 5,
+                width: "45%",
+                backgroundColor: "#dbd523",
+              }}
+              onPress={openCamera}
+            >
+              <Text style={styles.textStyle}>Chụp ảnh</Text>
+            </TouchableOpacity>
+          </View>
           <View>
             <FormProvider {...methods}>
               <View style={{ width: "100%", gap: 10 }}>
@@ -409,5 +466,10 @@ const styles = StyleSheet.create({
   },
   radioButtonSelected: {
     backgroundColor: "blue",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginTop: 20,
   },
 });

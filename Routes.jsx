@@ -33,6 +33,7 @@ import WarrantyComponentConfirm from "./src/page/WarrantyServiceDetail/WarrantyC
 import WarrantyNewComponent from "./src/page/WarrantyServiceDetail/WarrantyNewComponents";
 import OrderDetails from "./src/page/DeliveryDetail/OrderDetails";
 import PushNotification from "./src/page/Notification/PushNotification";
+import CameraWithLocation from "./src/page/CameraLocation/CameraWithLocation";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -100,6 +101,11 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           name="WarrantyNewComponent"
           component={WarrantyNewComponent}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="CameraWithLocation"
+          component={CameraWithLocation}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}

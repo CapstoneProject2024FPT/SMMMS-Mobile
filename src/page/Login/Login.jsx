@@ -36,8 +36,8 @@ export default function LoginScreen() {
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: "tai1234",
+      password: "12345678",
     },
   });
 

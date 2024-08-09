@@ -24,10 +24,10 @@ export default function ContractCandSuccess() {
     <View style={styles?.body}>
       <View style={styles?.container}>
         <ComTitlePage>Yêu cầu hủy hợp đồng đã được gửi đi</ComTitlePage>
-        <Image style={{}} source={Vector} />
+        <Image source={Vector} />
         <View style={styles?.container1}>
           <View style={styles?.container2}>
-            <Text style={{  fontSize: 22,textAlign:"center" }}>
+            <Text style={{ fontSize: 22, textAlign: "center" }}>
               Đã gửi thành công yêu cầu hủy hợp đồng. Vui lòng chờ phản hồi
             </Text>
           </View>

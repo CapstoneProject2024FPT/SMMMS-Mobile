@@ -22,7 +22,7 @@ export default function RegisterSuccess() {
     <View style={styles?.body}>
       <View style={styles?.container}>
         <ComTitlePage>{RegisterSuccess?.pageTitle}</ComTitlePage>
-        <Image style={{}} source={Vector} />
+        <Image source={Vector} />
         <ComTitle
           style={{ fontSize: 13, textAlign: "center", fontWeight: "normal" }}
         >

@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { Text, View, Button, Platform, Image } from "react-native";
+import { Text, View, Button, Platform } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
-import {  SvgUri } from "react-native-svg";
-import ComIcon from "../../Components/ComIcon/ComIcon";
 import SelectedDates from "../../Components/ComDate/SelectedDates";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -15,7 +13,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function NotificationPage({ }) {
+export default function NotificationPage({}) {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [channels, setChannels] = useState([]);
   const [notification, setNotification] = useState(null);
@@ -39,9 +37,9 @@ export default function NotificationPage({ }) {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        // nơi trả về màn hình 
-         navigation.navigate("Details");
-        console.log(1111111,response);
+        // nơi trả về màn hình
+        navigation.navigate("Details");
+        console.log(1111111, response);
       });
 
     return () => {
@@ -62,7 +60,7 @@ export default function NotificationPage({ }) {
         justifyContent: "space-around",
       }}
     >
-    <SelectedDates/>
+      <SelectedDates />
       <Button
         title="Press to schedule a notification"
         onPress={() => {
@@ -77,11 +75,11 @@ export default function NotificationPage({ }) {
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬toàn nè!",
+      title: "You've got mail! 📬tài nè!",
       body: "Here is the notification body",
       data: { data: "login", test: { test1: "more data" } },
     },
-    trigger: { seconds: 1 },// thời gian 
+    trigger: { seconds: 1 }, // thời gian
   });
 }
 
@@ -124,7 +122,7 @@ async function registerForPushNotificationsAsync() {
           projectId,
         })
       ).data;
-      console.log(22222222,token);
+      console.log(22222222, token);
     } catch (e) {
       token = `${e}`;
     }

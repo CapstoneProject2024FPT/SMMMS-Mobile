@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   Modal,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
-import { getData, putData } from "../../api/api"; // Make sure to import putData if it's used
+import { getData, putData } from "../../api/api";
 import ComTextArea from "../../Components/ComInput/ComTextArea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
@@ -26,6 +27,7 @@ export default function WarrantyServiceDetail({ route }) {
     img: "https://halivina.vn/upload/images/11(1).jpg",
   });
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state
 
   const loginSchema = yup.object().shape({
     note: yup.string().required("Vui lòng nhập thông tin"),
@@ -67,19 +69,22 @@ export default function WarrantyServiceDetail({ route }) {
 
   const navigation = useNavigation();
   const { id, warrantyId } = route.params;
+
   useEffect(() => {
-    const WarranttData = async () => {
-      const res = await getData(`warranty/${id}`);
-      setData(res.data);
+    const fetchData = async () => {
+      try {
+        const res = await getData(`warranty/${id}`);
+        setData(res.data);
+        const detailRes = await getData(`warrantyDetail/${warrantyId}`);
+        setWarrantyDetail(detailRes.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const WarranttDetailData = async () => {
-      const res = await getData(`warrantyDetail/${warrantyId}`);
-      setWarrantyDetail(res.data);
-    };
-
-    WarranttData();
-    WarranttDetailData();
+    fetchData();
   }, [id]);
 
   const formatDateTime = (date) => {
@@ -108,6 +113,7 @@ export default function WarrantyServiceDetail({ route }) {
       console.log(error);
     }
   };
+
   const handleCloseModal = () => {
     setModalVisible(false);
     reset();
@@ -116,6 +122,14 @@ export default function WarrantyServiceDetail({ route }) {
   const openModal = () => {
     setModalVisible(true);
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#33B39C" />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -351,5 +365,10 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

@@ -5,11 +5,11 @@ import avata from "../../../assets/avata.png";
 export default function ComAvatar({ link }) {
   return (
     <View>
-      {link ? (
+      {/* {link ? (
         <Image source={{ uri: link }} style={styles.image} />
-      ) : (
-        <Image source={avata} style={styles.image} />
-      )}
+      ) : ( */}
+      <Image source={avata} style={styles.image} />
+      {/* )} */}
     </View>
   );
 }

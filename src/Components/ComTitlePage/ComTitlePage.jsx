@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Text } from "react-native-elements";
+import { StyleSheet, View, Text } from "react-native";
+// import { Text } from "react-native-elements";
 
 export default function ComTitlePage({ children }) {
   return (

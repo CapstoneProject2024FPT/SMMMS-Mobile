@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { LanguageContext } from "../../contexts/LanguageContext";
 
 export default function TopicContent({ children }) {
-    const {} = useContext(LanguageContext);
+  const {} = useContext(LanguageContext);
   return (
     <View>
       <Text style={styles.text}>{children}</Text>
@@ -16,5 +16,6 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 18,
     fontWeight: "bold",
+    marginBottom: 5,
   },
 });

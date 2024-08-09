@@ -10,14 +10,14 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/splash.png",
+          "icon": "./assets/logo-SMMMS.png",
           "color": "#ffffff",
           "mode": "production"
         }
       ]
     ],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo-SMMMS.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -31,7 +31,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.taismile.smmms"
     },
     "web": {
       "favicon": "./assets/favicon.png"

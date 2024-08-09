@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Image } from "react-native";
-import plusIcon from "../../../../assets/profile_icons/plus.png";
 
 export default function Avatar({ image, setImg }) {
   const [avatarSource, setAvatarSource] = useState(
@@ -10,18 +9,6 @@ export default function Avatar({ image, setImg }) {
       "https://www.shutterstock.com/image-vector/worker-engineer-technician-mechanic-avatar-260nw-1983689702.jpg"
   );
 
-  const handleChoosePhoto = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      setAvatarSource(result);
-      setImg(result);
-    }
-  };
   return (
     <View style={styles.body}>
       <View style={styles.avatarContainer}>

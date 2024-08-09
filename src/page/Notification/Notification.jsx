@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import ComNotification from "./ComNotification/ComNotifications";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
 import { getData } from "../../api/api";
 import { useStorage } from "../../hooks/useLocalStorage";
 import ComNotificationWarranty from "./ComNotification/ComNotificationsWarranty";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Notification({}) {
   const [tasks, setTasks] = useState([]);
@@ -41,6 +42,15 @@ export default function Notification({}) {
   const handleFilterChange = (type) => {
     setFilterType(type);
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setTimeout(() => {
+        getAllTask();
+      }, 10);
+      return () => {};
+    }, [user.id])
+  );
 
   return (
     <View style={styles.body}>

@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Text } from "react-native-elements";
+import { StyleSheet, View, Text } from "react-native";
+// import { Text } from "react-native-elements";
 
 export default function ComTitle({ children, style }) {
   return (
@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#000",
     fontWeight: "bold",
-    
   },
   view: {
     // padding: 8,

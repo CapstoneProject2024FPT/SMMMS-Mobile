@@ -13,7 +13,6 @@ import ServicePackages from "./src/page/ServicePackages/ServicePackages";
 import Notification from "./src/page/Notification/Notification";
 import ServiceHistory from "./src/page/ServiceHistory/ServiceHistory/ServiceHistory";
 import ServiceHistoryDetail from "./src/page/ServiceHistory/ServiceHistoryDetail/ServiceHistoryDetail";
-import CreateFeedback from "./src/page/Feedback/CreateFeedback";
 import UserProfile from "./src/page/UserProfile/UserProfile";
 import EditProfile from "./src/page/UserProfile/EditProfile/EditProfile";
 import DetailProfile from "./src/page/UserProfile/DetailProfile";
@@ -126,11 +125,6 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           name="ServiceHistoryDetail"
           component={ServiceHistoryDetail}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="CreateFeedback"
-          component={CreateFeedback}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}

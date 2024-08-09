@@ -82,7 +82,7 @@ export default function LoginScreen() {
           <ComTitlePage>{Login?.pageTitle}</ComTitlePage>
           <View style={{ width: "90%", gap: 10 }}>
             <ComInput
-              label={Login?.label?.email}
+              label={"Tài khoản"}
               placeholder={Login?.placeholder?.email}
               name="username"
               control={control}

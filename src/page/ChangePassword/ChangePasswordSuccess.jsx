@@ -22,7 +22,7 @@ export default function ChangePasswordSuccess() {
     <View style={styles?.body}>
       <View style={styles?.container}>
         <ComTitlePage>{ChangePassword?.titleRegisterSuccess}</ComTitlePage>
-        <Image style={{}} source={Vector} />
+        <Image source={Vector} />
         <ComTitle
           style={{ fontSize: 19, textAlign: "center", fontWeight: "normal" }}
         >

@@ -25,20 +25,13 @@ export default function News() {
   return (
     <View style={styles?.body}>
       <TopicContent>{"Các hoạt động hôm nay"}</TopicContent>
-      <ScrollView
+      {/* <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         horizontal={true}
       >
-        <View style={styles?.buttonContainer}>
-          <ComSelectButton onPress={check} check={select}>
-            Bảo trì
-          </ComSelectButton>
-          <ComSelectButton onPress={check1} check={select1}>
-            Bảo hành
-          </ComSelectButton>
-        </View>
-      </ScrollView>
+        
+      </ScrollView> */}
 
       {data.map((value, index) => (
         <ComNew

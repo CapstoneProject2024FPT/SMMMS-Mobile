@@ -12,6 +12,7 @@ import {
   Keyboard,
   Modal,
   Alert,
+  ActivityIndicator, // Import ActivityIndicator
 } from "react-native";
 import * as yup from "yup";
 import ComSelectButton from "../../Components/ComButton/ComSelectButton";
@@ -31,6 +32,7 @@ export default function DeliveryDetail({ route }) {
     img: "https://file.hstatic.net/200000472237/article/ung-dung-ship-hang_fed864d839d04fe1b035df0d991a8d0b.png",
   });
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state
 
   const loginSchema = yup
     .object()
@@ -71,8 +73,14 @@ export default function DeliveryDetail({ route }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getData(`task/${id}`);
-      setDetails(res.data);
+      try {
+        const res = await getData(`task/${id}`);
+        setDetails(res.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, [id]);
@@ -138,6 +146,14 @@ export default function DeliveryDetail({ route }) {
     setModalVisible(false);
     reset();
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#33B39C" />
+      </View>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -400,5 +416,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
